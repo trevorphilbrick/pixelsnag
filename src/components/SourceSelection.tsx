@@ -5,7 +5,6 @@ function SourceSelection({
   showSourceSelection = false,
   onClose,
   selectedSource,
-  setScreenshot,
   sources,
   setSelectedSource,
   setScreenshotUrl,
@@ -13,7 +12,6 @@ function SourceSelection({
   showSourceSelection?: boolean;
   onClose: () => void;
   selectedSource: string | null;
-  setScreenshot: (imageData: string) => void;
   sources: any[];
   setSelectedSource: (sourceId: string) => void;
   setScreenshotUrl: (url: string) => void;
@@ -35,6 +33,7 @@ function SourceSelection({
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
+          // @ts-expect-error - TODO: fix this
           mandatory: {
             chromeMediaSource: "desktop",
             chromeMediaSourceId: selectedSource,

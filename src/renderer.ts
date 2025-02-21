@@ -28,3 +28,23 @@
 
 import "./index.css";
 import "./Main";
+
+// Add the screenshot functionality to window
+window.screenshot = {
+  async captureScreenRegion() {
+    try {
+      const response = await fetch("http://localhost:5000/capture");
+      const data = await response.json();
+
+      if (data.success) {
+        return `data:image/png;base64,${data.image}`;
+      } else {
+        console.error("Screenshot failed:", data.error);
+        return null;
+      }
+    } catch (error) {
+      console.error("Error capturing screenshot:", error);
+      return null;
+    }
+  },
+};
