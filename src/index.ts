@@ -13,11 +13,16 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 function startPythonServer() {
   const isDev = process.env.NODE_ENV === "development";
 
+  console.log("isDev:", isDev);
+  console.log("__dirname:", __dirname);
+
   // In development, use the resources directory in project root
   // In production, use the resources directory in app.getAppPath()
   const resourcesPath = isDev
-    ? path.join(__dirname, "..", "resources", "python")
+    ? path.join("resources", "python")
     : path.join(process.resourcesPath, "resources", "python");
+
+  console.log("Resources path:", resourcesPath);
 
   const executableName = process.platform === "win32" ? "server.exe" : "server";
   const pythonExecutable = path.join(resourcesPath, executableName);
@@ -43,11 +48,12 @@ if (require("electron-squirrel-startup")) {
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 900,
+    height: 700,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
 
@@ -143,6 +149,27 @@ const createWindow = (): void => {
         });
     });
   });
+
+  // Add these permissions
+  mainWindow.webContents.session.setPermissionRequestHandler(
+    (webContents, permission, callback) => {
+      if (permission === "media") {
+        callback(true);
+      } else {
+        callback(false);
+      }
+    }
+  );
+
+  // Add these permissions for screen capture
+  mainWindow.webContents.session.setPermissionCheckHandler(
+    (webContents, permission) => {
+      if (permission === "media") {
+        return true;
+      }
+      return false;
+    }
+  );
 };
 
 // This method will be called when Electron has finished

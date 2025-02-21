@@ -24,9 +24,17 @@ function Canvas({
 
   useEffect(() => {
     const fetchSources = async () => {
-      const availableSources = await window.electron.getSources();
-      console.log(availableSources);
-      setSources(availableSources);
+      try {
+        if (!window.electron?.getSources) {
+          console.error("electron.getSources is not available");
+          return;
+        }
+        const availableSources = await window.electron.getSources();
+        console.log(availableSources);
+        setSources(availableSources);
+      } catch (error) {
+        console.error("Failed to fetch sources:", error);
+      }
     };
 
     fetchSources();
@@ -93,10 +101,6 @@ function Canvas({
       setCtx(ctx);
     }
   }, [setCtx]);
-
-  useEffect(() => {
-    console.log(screenshot);
-  }, [screenshot]);
 
   return (
     <>
