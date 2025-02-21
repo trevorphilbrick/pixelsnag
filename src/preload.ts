@@ -9,4 +9,15 @@ contextBridge.exposeInMainWorld("electron", {
   },
   captureSource: (sourceId: string) =>
     ipcRenderer.invoke("capture-source", sourceId),
+  onScreenshotShortcut: (callback: () => void) => {
+    const listener = () => callback();
+    ipcRenderer.on("trigger-screenshot", listener);
+
+    // Return cleanup function
+    return () => {
+      ipcRenderer.removeListener("trigger-screenshot", listener);
+    };
+  },
+  copyToClipboard: (dataUrl: string) =>
+    ipcRenderer.invoke("copy-to-clipboard", dataUrl),
 });

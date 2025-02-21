@@ -1,4 +1,12 @@
-import { app, BrowserWindow, desktopCapturer, ipcMain } from "electron";
+import {
+  app,
+  BrowserWindow,
+  desktopCapturer,
+  ipcMain,
+  globalShortcut,
+  nativeImage,
+  clipboard,
+} from "electron";
 import * as path from "path";
 import { spawn } from "child_process";
 
@@ -150,6 +158,18 @@ const createWindow = (): void => {
     });
   });
 
+  // Add IPC handler for clipboard
+  ipcMain.handle("copy-to-clipboard", async (_, dataUrl: string) => {
+    try {
+      const image = nativeImage.createFromDataURL(dataUrl);
+      clipboard.writeImage(image);
+      return true;
+    } catch (error) {
+      console.error("Failed to copy to clipboard:", error);
+      return false;
+    }
+  });
+
   // Add these permissions
   mainWindow.webContents.session.setPermissionRequestHandler(
     (webContents, permission, callback) => {
@@ -170,6 +190,16 @@ const createWindow = (): void => {
       return false;
     }
   );
+
+  // Register global shortcut
+  globalShortcut.register("CommandOrControl+Shift+Alt+S", () => {
+    mainWindow.webContents.send("trigger-screenshot");
+  });
+
+  // Unregister shortcuts when window is closed
+  mainWindow.on("closed", () => {
+    globalShortcut.unregisterAll();
+  });
 };
 
 // This method will be called when Electron has finished

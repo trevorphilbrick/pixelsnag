@@ -57,23 +57,13 @@ function Canvas({
   };
 
   const handleCopyToClipboard = async () => {
+    console.log("handleCopyToClipboard");
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     try {
-      // Convert canvas to blob
-      const blob = await new Promise<Blob>((resolve) => {
-        canvas.toBlob((blob) => {
-          if (blob) resolve(blob);
-        }, "image/png");
-      });
-
-      // Create ClipboardItem and write to clipboard
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          "image/png": blob,
-        }),
-      ]);
+      const dataUrl = canvas.toDataURL("image/png");
+      await window.electron?.copyToClipboard(dataUrl);
     } catch (err) {
       console.error("Failed to copy image to clipboard:", err);
     }
@@ -101,6 +91,18 @@ function Canvas({
       setCtx(ctx);
     }
   }, [setCtx]);
+
+  useEffect(() => {
+    // Register the screenshot shortcut handler
+    const cleanup = window.electron?.onScreenshotShortcut?.(
+      handleSnippingCapture
+    );
+
+    // Return cleanup function to remove the event listener
+    return () => {
+      cleanup?.();
+    };
+  }, []); // Empty dependency array since handleSnippingCapture is stable
 
   return (
     <>
