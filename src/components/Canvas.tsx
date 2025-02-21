@@ -104,7 +104,6 @@ function Canvas({
         showSourceSelection={showSourceSelection}
         onClose={() => setShowSourceSelection(false)}
         sources={sources}
-        setScreenshot={setScreenshot}
         selectedSource={selectedSource}
         setSelectedSource={setSelectedSource}
         setScreenshotUrl={setScreenshotUrl}
