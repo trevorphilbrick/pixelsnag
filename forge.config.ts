@@ -13,12 +13,15 @@ import { rendererConfig } from "./webpack.renderer.config";
 
 const config: ForgeConfig = {
   packagerConfig: {
-    asar: true,
+    asar: {
+      unpack: "resources/python/**/*",
+    },
+    extraResource: ["./resources"],
   },
   rebuildConfig: {},
   makers: [
     new MakerSquirrel({}),
-    new MakerZIP({}, ["darwin"]),
+    new MakerZIP({}, ["darwin", "linux"]),
     new MakerRpm({}),
     new MakerDeb({}),
   ],
