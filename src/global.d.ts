@@ -11,6 +11,7 @@ declare global {
       captureSource: (sourceId: string) => Promise<string | null>;
       onScreenshotShortcut: (callback: () => void) => () => void;
       copyToClipboard: (dataUrl: string) => Promise<boolean>;
+      focusWindow: () => Promise<void>;
     };
   }
 }

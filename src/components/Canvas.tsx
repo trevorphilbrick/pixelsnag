@@ -76,6 +76,8 @@ function Canvas({
       if (imageUrl) {
         setScreenshot(imageUrl);
         setScreenshotUrl(imageUrl);
+        // Bring the window to the front after capturing
+        await window.electron?.focusWindow?.();
       }
     } catch (error) {
       console.error("Failed to capture screenshot:", error);

@@ -20,4 +20,5 @@ contextBridge.exposeInMainWorld("electron", {
   },
   copyToClipboard: (dataUrl: string) =>
     ipcRenderer.invoke("copy-to-clipboard", dataUrl),
+  focusWindow: () => ipcRenderer.invoke("focus-window"),
 });

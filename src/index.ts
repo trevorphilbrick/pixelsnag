@@ -170,6 +170,13 @@ const createWindow = (): void => {
     }
   });
 
+  ipcMain.handle("focus-window", () => {
+    if (mainWindow) {
+      mainWindow.show();
+      mainWindow.focus();
+    }
+  });
+
   // Add these permissions
   mainWindow.webContents.session.setPermissionRequestHandler(
     (webContents, permission, callback) => {
