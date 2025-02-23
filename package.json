@@ -11,7 +11,9 @@
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx .",
     "build:python": "python scripts/build_snipping_server.py",
-    "build": "npm run build:python && electron-forge make"
+    "build": "npm run build:python && electron-forge make",
+    "build:macos": "electron-forge make",
+    "build:windows": "npm run build:python && electron-forge make --platform=win32"
   },
   "keywords": [],
   "author": {
