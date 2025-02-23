@@ -8,7 +8,7 @@ def build_executable():
     project_root = os.path.dirname(script_dir)
     
     # Path to your server script
-    server_script = os.path.join(project_root, "services", "snipping_server.py")
+    server_script = os.path.join(project_root, "services", "snipping_server_windows.py")
     
     # Path to output directory
     output_dir = os.path.join(project_root, "resources", "python")

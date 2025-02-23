@@ -95,4 +95,8 @@ out/
 dist/
 build/
 resources/python/
+scripts/build
+scripts/venv
+scripts/server.spec
+
 
