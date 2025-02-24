@@ -15,6 +15,8 @@ import img2 from "./img-2.jpg";
 import img3 from "./img-3.jpg";
 
 import placeholder from "./placeholder.png";
+import icon from "./icon.png";
+import iconHalf from "./icon@0.5x.png";
 
 export {
   meshGradient1,
@@ -31,4 +33,6 @@ export {
   img2,
   img3,
   placeholder,
+  icon,
+  iconHalf,
 };
