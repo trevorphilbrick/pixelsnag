@@ -13,7 +13,11 @@ import { rendererConfig } from "./webpack.renderer.config";
 
 const config: ForgeConfig = {
   packagerConfig: {
-    asar: true,
+    icon: "/resources/icon",
+    asar: {
+      unpack: "resources/python/**/*",
+    },
+    extraResource: ["./resources"],
   },
   rebuildConfig: {},
   makers: [
