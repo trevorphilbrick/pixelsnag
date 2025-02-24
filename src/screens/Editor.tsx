@@ -3,7 +3,6 @@ import Canvas from "../components/Canvas";
 import Sidebar from "../components/Sidebar";
 import clsx from "clsx";
 import { placeholder } from "../images";
-
 function Editor() {
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);

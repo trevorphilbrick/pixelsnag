@@ -12,6 +12,7 @@ declare global {
       onScreenshotShortcut: (callback: () => void) => () => void;
       copyToClipboard: (dataUrl: string) => Promise<boolean>;
       focusWindow: () => Promise<void>;
+      getOs: () => Promise<string>;
     };
   }
 }

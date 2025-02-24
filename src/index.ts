@@ -217,6 +217,11 @@ const createWindow = (): void => {
     });
   });
 
+  // get os
+  ipcMain.handle("get-os", () => {
+    return process.platform;
+  });
+
   // Add IPC handler for clipboard
   ipcMain.handle("copy-to-clipboard", async (_, dataUrl: string) => {
     try {
