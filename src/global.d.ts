@@ -9,6 +9,9 @@ declare global {
       captureScreen: () => Promise<string | null>;
       getSources: () => Promise<any[]>;
       captureSource: (sourceId: string) => Promise<string | null>;
+      onScreenshotShortcut: (callback: () => void) => () => void;
+      copyToClipboard: (dataUrl: string) => Promise<boolean>;
+      focusWindow: () => Promise<void>;
     };
   }
 }

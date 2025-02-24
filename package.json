@@ -10,7 +10,11 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint --ext .ts,.tsx .",
+    "build:python": "python scripts/build_snipping_server.py",
+    "build": "npm run build:python && electron-forge make",
+    "build:macos": "electron-forge make",
+    "build:windows": "npm run build:python && electron-forge make --platform=win32"
   },
   "keywords": [],
   "author": {
@@ -57,5 +61,22 @@
     "react-router-dom": "^7.2.0",
     "react-zoom-pan-pinch": "^3.7.0",
     "tailwindcss": "^3.4.17"
+  },
+  "build": {
+    "files": [
+      "**/*"
+    ],
+    "unpack": [
+      "resources/python/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "resources",
+        "to": "resources",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
   }
 }
