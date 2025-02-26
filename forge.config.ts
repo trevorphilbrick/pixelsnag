@@ -13,6 +13,24 @@ import { rendererConfig } from "./webpack.renderer.config";
 
 const config: ForgeConfig = {
   packagerConfig: {
+    osxSign: {
+      optionsForFile: () => {
+        return {
+          entitlements: "./pixelsnag.entitlements.plist",
+        };
+      },
+    },
+    osxNotarize: {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore - env variables are set in .zshrc
+      appleApiKey: process.env.APPLE_API_KEY,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore - env variables are set in .zshrc
+      appleApiKeyId: process.env.APPLE_API_KEY_ID,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore - env variables are set in .zshrc
+      appleApiIssuer: process.env.APPLE_API_ISSUER,
+    },
     icon: "/resources/icon",
     asar: {
       unpack: "resources/python/**/*",

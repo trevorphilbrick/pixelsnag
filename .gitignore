@@ -98,5 +98,6 @@ resources/python/
 scripts/build
 scripts/venv
 scripts/server.spec
+api-key/
 
 
