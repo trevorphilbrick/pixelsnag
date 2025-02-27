@@ -15,7 +15,9 @@ import {
   img2,
   img3,
 } from "../images";
-
+import FileSelector from "./FileSelector";
+import SectionHeader from "./SectionHeader";
+import RangeSlider from "./RangeSlider";
 const backgroundImages = [
   {
     name: "mesh gradients",
@@ -206,59 +208,44 @@ function Sidebar({
       )}
     >
       <div className="flex flex-col gap-4 p-4">
-        <h3 className="text-md text-neutral-300 font-semibold">
-          Select An Image
-        </h3>
-        <input
-          type="file"
-          name="screenshot"
-          accept="image/*"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) {
-              const reader = new FileReader();
-              reader.onload = (e) => {
-                setScreenshotUrl(e.target?.result as string);
-              };
-              reader.readAsDataURL(file);
-            }
-          }}
-          className="text-sm text-neutral-300  rounded-md p-4 bg-neutral-800 shadow-md"
-        />
-        <h3 className="text-md text-neutral-300 font-semibold">Sizing</h3>
+        <SectionHeader title="Select An Image" />
+        <FileSelector setScreenshotUrl={setScreenshotUrl} />
+        <SectionHeader title="Sizing" />
         <div className="flex flex-col gap-2 bg-neutral-800 p-4 rounded-md shadow-md">
           <label htmlFor="canvasPadding" className="text-sm text-neutral-300">
             background size
           </label>
-          <input
-            type="range"
+
+          <RangeSlider
             min={0}
             max={248}
-            value={canvasPadding}
-            onChange={(e) => setCanvasPadding(parseInt(e.target.value))}
+            defaultValue={canvasPadding}
+            step={1}
+            onChange={(value) => setCanvasPadding(value)}
           />
           <label htmlFor="padding" className="text-sm text-neutral-300">
             padding
           </label>
-          <input
-            type="range"
+
+          <RangeSlider
             min={0}
             max={248}
-            value={innerPadding}
-            onChange={(e) => setInnerPadding(parseInt(e.target.value))}
+            defaultValue={innerPadding}
+            step={1}
+            onChange={(value) => setInnerPadding(value)}
           />
           <label htmlFor="borderRadius" className="text-sm text-neutral-300">
             border radius
           </label>
-          <input
-            type="range"
+          <RangeSlider
             min={0}
             max={64}
-            value={borderRadius}
-            onChange={(e) => setBorderRadius(parseInt(e.target.value))}
+            defaultValue={borderRadius}
+            step={1}
+            onChange={(value) => setBorderRadius(value)}
           />
         </div>
-        <h3 className="text-md text-neutral-300 font-semibold">Shadow</h3>
+        <SectionHeader title="Shadow" />
         <div className="flex flex-col gap-2 bg-neutral-800 p-4 rounded-md shadow-md">
           <label htmlFor="shadowColor" className="text-sm text-neutral-300">
             color
@@ -267,31 +254,31 @@ function Sidebar({
             type="color"
             value={shadowColor}
             onChange={(e) => setShadowColor(e.target.value)}
+            className="w-16 h-16  border-none bg-transparent shadow-md cursor-pointer"
           />
           <label htmlFor="shadowBlur" className="text-sm     text-neutral-300">
             blur
           </label>
-          <input
-            type="range"
+
+          <RangeSlider
             min={0}
             max={64}
-            value={shadowBlur}
-            onChange={(e) => setShadowBlur(parseInt(e.target.value))}
+            defaultValue={shadowBlur}
+            step={1}
+            onChange={(value) => setShadowBlur(value)}
           />
           <label htmlFor="shadowOffsetY" className="text-sm text-neutral-300">
             offset
           </label>
-          <input
-            type="range"
+          <RangeSlider
             min={0}
             max={64}
-            value={shadowOffsetY}
-            onChange={(e) => setShadowOffsetY(parseInt(e.target.value))}
+            defaultValue={shadowOffsetY}
+            step={1}
+            onChange={(value) => setShadowOffsetY(value)}
           />
         </div>
-        <h3 className="text-md text-neutral-300 font-semibold">
-          Background image
-        </h3>
+        <SectionHeader title="Background image" />
         <div className="flex flex-col gap-2 bg-neutral-800 p-4 rounded-md shadow-md  h-[306px]">
           <div className="">
             <div className="flex gap-2 overflow-x-scroll scrollbar-hidden mb-4">
