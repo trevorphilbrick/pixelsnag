@@ -33,7 +33,7 @@ import "./Main";
 window.screenshot = {
   async captureScreenRegion() {
     try {
-      const response = await fetch("http://localhost:5000/capture");
+      const response = await fetch("http://localhost:5001/capture");
       const data = await response.json();
 
       if (data.success) {

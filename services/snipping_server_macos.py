@@ -6,7 +6,7 @@ from PIL import Image
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 def convert_image_to_base64(image_path):
     with Image.open(image_path) as image:
@@ -39,7 +39,7 @@ def capture_route():
         })
 
 def run_server():
-    app.run(port=5000, debug=True)
+    app.run(port=5001, debug=True)
 
 if __name__ == '__main__':
     run_server() 

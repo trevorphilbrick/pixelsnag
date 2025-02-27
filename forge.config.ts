@@ -7,7 +7,7 @@ import { AutoUnpackNativesPlugin } from "@electron-forge/plugin-auto-unpack-nati
 import { WebpackPlugin } from "@electron-forge/plugin-webpack";
 import { FusesPlugin } from "@electron-forge/plugin-fuses";
 import { FuseV1Options, FuseVersion } from "@electron/fuses";
-
+import { MakerDMG } from "@electron-forge/maker-dmg";
 import { mainConfig } from "./webpack.main.config";
 import { rendererConfig } from "./webpack.renderer.config";
 
@@ -17,19 +17,16 @@ const config: ForgeConfig = {
       optionsForFile: () => {
         return {
           entitlements: "./pixelsnag.entitlements.plist",
+          entitlementsInherit: "./pixelsnag.entitlements.plist",
+          hardenedRuntime: true,
+          outputFile: "pixelsnag.dmg",
         };
       },
     },
     osxNotarize: {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore - env variables are set in .zshrc
-      appleApiKey: process.env.APPLE_API_KEY,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore - env variables are set in .zshrc
-      appleApiKeyId: process.env.APPLE_API_KEY_ID,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore - env variables are set in .zshrc
-      appleApiIssuer: process.env.APPLE_API_ISSUER,
+      appleId: "trevorphilbrick@outlook.com",
+      appleIdPassword: "",
+      teamId: "",
     },
     icon: "/resources/icon",
     asar: {
@@ -43,6 +40,7 @@ const config: ForgeConfig = {
     new MakerZIP({}, ["darwin", "linux"]),
     new MakerRpm({}),
     new MakerDeb({}),
+    new MakerDMG({}),
   ],
   plugins: [
     new AutoUnpackNativesPlugin({}),

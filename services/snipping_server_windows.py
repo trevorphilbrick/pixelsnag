@@ -47,7 +47,7 @@ def capture_screenshot():
     })
 
 def run_server():
-    app.run(port=5000)
+    app.run(port=5001)
 
 if __name__ == '__main__':
     run_server()

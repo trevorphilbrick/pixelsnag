@@ -94,8 +94,8 @@ const createWindow = (): void => {
           ...details.responseHeaders,
           "Content-Security-Policy": [
             "default-src 'self' 'unsafe-inline' 'unsafe-eval' data:;",
-            "connect-src 'self' http://localhost:5000;",
-            "img-src 'self' data: http://localhost:5000;",
+            "connect-src 'self' http://localhost:5001;",
+            "img-src 'self' data: http://localhost:5001;",
             "script-src 'self' 'unsafe-inline' 'unsafe-eval';",
           ].join(" "),
         },
@@ -282,7 +282,9 @@ app.on("ready", () => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on("window-all-closed", () => {
-  // Do nothing to prevent the app from quitting
+  if (process.platform !== "darwin") {
+    handleQuit();
+  }
 });
 
 // create new window if none are open
@@ -291,3 +293,6 @@ app.on("activate", () => {
     createWindow();
   }
 });
+
+// Ensure handleQuit is called when the app is about to quit
+app.on("before-quit", handleQuit);
