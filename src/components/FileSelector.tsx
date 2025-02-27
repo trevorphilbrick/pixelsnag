@@ -21,7 +21,7 @@ function FileSelector({
   };
 
   return (
-    <div className="flex gap-4 items-center">
+    <div className="flex gap-4 items-center  shadow-md bg-neutral-800 p-4 rounded-md">
       {/* Hidden File Input */}
       <input
         type="file"
