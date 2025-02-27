@@ -15,7 +15,8 @@ import {
   img2,
   img3,
 } from "../images";
-
+import FileSelector from "./FileSelector";
+import SectionHeader from "./SectionHeader";
 const backgroundImages = [
   {
     name: "mesh gradients",
@@ -206,25 +207,8 @@ function Sidebar({
       )}
     >
       <div className="flex flex-col gap-4 p-4">
-        <h3 className="text-md text-neutral-300 font-semibold">
-          Select An Image
-        </h3>
-        <input
-          type="file"
-          name="screenshot"
-          accept="image/*"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) {
-              const reader = new FileReader();
-              reader.onload = (e) => {
-                setScreenshotUrl(e.target?.result as string);
-              };
-              reader.readAsDataURL(file);
-            }
-          }}
-          className="text-sm text-neutral-300  rounded-md p-4 bg-neutral-800 shadow-md"
-        />
+        <SectionHeader title="Select An Image" />
+        <FileSelector setScreenshotUrl={setScreenshotUrl} />
         <h3 className="text-md text-neutral-300 font-semibold">Sizing</h3>
         <div className="flex flex-col gap-2 bg-neutral-800 p-4 rounded-md shadow-md">
           <label htmlFor="canvasPadding" className="text-sm text-neutral-300">

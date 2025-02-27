@@ -121,7 +121,7 @@ function Canvas({
           isSidebarOpen ? "w-full" : "w-screen"
         )}
       >
-        <div className="py-2 px-4 w-full flex justify-end gap-2 items-center">
+        <div className="py-2 px-4 w-full flex justify-end gap-2 items-center ">
           <RoundButton
             icon={
               <svg
@@ -130,7 +130,7 @@ function Canvas({
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="size-6 text-neutral-200"
+                className="size-4 text-neutral-200"
               >
                 <path
                   strokeLinecap="round"
@@ -141,7 +141,7 @@ function Canvas({
             }
             onClick={handleSnippingCapture}
             disabled={isCapturing}
-            text="Capture screen snippet"
+            text="Screen snip"
           />
           <RoundButton
             icon={
@@ -151,7 +151,7 @@ function Canvas({
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="size-6 text-neutral-200"
+                className="size-4 text-neutral-200"
               >
                 <path
                   strokeLinecap="round"
@@ -166,7 +166,7 @@ function Canvas({
               </svg>
             }
             onClick={() => setShowSourceSelection(!showSourceSelection)}
-            text="Capture source"
+            text="Source"
           />
           <RoundButton
             icon={
@@ -176,7 +176,7 @@ function Canvas({
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="size-6 text-neutral-200"
+                className="size-4 text-neutral-200"
               >
                 <path
                   strokeLinecap="round"
@@ -186,7 +186,7 @@ function Canvas({
               </svg>
             }
             onClick={handleCopyToClipboard}
-            text="Copy to clipboard"
+            text="Clipboard"
           />
           <RoundButton
             icon={
@@ -196,7 +196,7 @@ function Canvas({
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="size-6 text-neutral-200"
+                className="size-4 text-neutral-200"
               >
                 <path
                   strokeLinecap="round"
@@ -210,7 +210,7 @@ function Canvas({
           />
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="p-3 bg-neutral-900 rounded-full flex items-center justify-center shadow-md hover:bg-neutral-700 transition-colors duration-200 active:scale-95"
+            className="p-2 bg-neutral-900 rounded-full flex items-center justify-center shadow-md hover:bg-neutral-700 transition-colors duration-200 active:scale-95"
           >
             {isSidebarOpen ? (
               <svg

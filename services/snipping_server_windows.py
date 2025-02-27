@@ -5,17 +5,34 @@ import base64
 from PIL import Image
 import io
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={
+    r"/*": {
+        "origins": [
+            "http://localhost:9229",
+            "http://127.0.0.1:9229",
+            "http://localhost:3000",
+            "http://127.0.0.1:3000"
+        ]
+    }
+})
 screenshot_data = None
 
 def convert_image_to_base64(image_path):
-    with Image.open(image_path) as image:
-        buffered = io.BytesIO()
-        image.save(buffered, format="PNG")
-        img_str = base64.b64encode(buffered.getvalue())
-        return img_str.decode()
+    try:
+        with Image.open(image_path) as image:
+            buffered = io.BytesIO()
+            image.save(buffered, format="PNG")
+            img_str = base64.b64encode(buffered.getvalue())
+            # Clean up the temporary file after conversion
+            if os.path.exists(image_path):
+                os.remove(image_path)
+            return img_str.decode()
+    except Exception as e:
+        print(f"Error converting image to base64: {e}")
+        return None
 
 @app.route('/capture', methods=['GET'])
 def capture_screenshot():
@@ -23,12 +40,15 @@ def capture_screenshot():
     
     def run_snipping_tool():
         global screenshot_data
-        snipping_tool = ScreenSnippingTool()
-        screenshot_path = snipping_tool.get_screenshot()
-        if screenshot_path:
-            screenshot_data = convert_image_to_base64(screenshot_path)
-            snipping_tool.cleanup()
-        else:
+        try:
+            snipping_tool = ScreenSnippingTool()
+            screenshot_path = snipping_tool.get_screenshot()
+            if screenshot_path:
+                screenshot_data = convert_image_to_base64(screenshot_path)
+            else:
+                screenshot_data = None
+        except Exception as e:
+            print(f"Error in snipping tool: {e}")
             screenshot_data = None
 
     # Run the snipping tool in a separate thread
