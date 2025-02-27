@@ -33,6 +33,8 @@ const CustomRangeSlider = ({
         onChange={handleChange}
         className="w-full max-w-md appearance-none bg-transparent focus:outline-none"
       />
+      {/* eslint-disable-next-line */}
+      {/* @ts-ignore */}
       <style jsx>{`
         input[type="range"] {
           -webkit-appearance: none;
