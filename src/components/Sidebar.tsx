@@ -139,8 +139,24 @@ function Sidebar({
         }
       }
 
-      // Draw background
-      ctx.drawImage(backgroundImage, 0, 0, ctx.canvas.width, ctx.canvas.height);
+      // Calculate aspect ratio
+      const aspectRatio = backgroundImage.width / backgroundImage.height;
+      let drawWidth = ctx.canvas.width;
+      let drawHeight = ctx.canvas.height;
+
+      // Adjust dimensions to cover the canvas
+      if (drawWidth / drawHeight < aspectRatio) {
+        drawWidth = drawHeight * aspectRatio;
+      } else {
+        drawHeight = drawWidth / aspectRatio;
+      }
+
+      // Center the image on the canvas
+      const offsetX = (ctx.canvas.width - drawWidth) / 2;
+      const offsetY = (ctx.canvas.height - drawHeight) / 2;
+
+      // Draw the background image with cover fill type
+      ctx.drawImage(backgroundImage, offsetX, offsetY, drawWidth, drawHeight);
 
       const x = canvasPadding / 2;
       const y = canvasPadding / 2;
