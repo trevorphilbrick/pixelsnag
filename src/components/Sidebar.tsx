@@ -18,6 +18,7 @@ import {
 import FileSelector from "./FileSelector";
 import SectionHeader from "./SectionHeader";
 import RangeSlider from "./RangeSlider";
+
 const backgroundImages = [
   {
     name: "mesh gradients",
