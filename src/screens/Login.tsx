@@ -76,11 +76,11 @@ const Login = () => {
       ></div>
       <div className="w-1/2 h-full">
         <div className="w-full h-full flex flex-col items-center justify-center px-4">
-          <h1 className="text-4xl font-bold text-neutral-300 mb-8 self-start">
-            Login
-          </h1>
           <form className="w-full max-w-md" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-4">
+              <h1 className="text-4xl font-bold text-neutral-300 mb-4 self-start">
+                Login
+              </h1>
               <div className="flex flex-col gap-2">
                 <label htmlFor="email" className="text-neutral-300">
                   Email
