@@ -18,6 +18,7 @@ import {
 import FileSelector from "./FileSelector";
 import SectionHeader from "./SectionHeader";
 import RangeSlider from "./RangeSlider";
+import CustomImageFileSelector from "./CustomImageFileSelector";
 
 const backgroundImages = [
   {
@@ -82,14 +83,6 @@ function Sidebar({
   const [shadowBlur, setShadowBlur] = useState<number>(20);
   const [shadowOffsetY, setShadowOffsetY] = useState<number>(8);
 
-  const handleLocalImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => setBackgroundImageUrl(e.target?.result as string);
-      reader.readAsDataURL(file);
-    }
-  };
   // handle screenshot loading
   useEffect(() => {
     if (!ctx) return;
@@ -347,11 +340,7 @@ function Sidebar({
                   />
                 ))}
               {selectedBackgroundCategory === "custom" && (
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleLocalImageUpload}
-                />
+                <CustomImageFileSelector setImageUrl={setBackgroundImageUrl} />
               )}
             </div>
           </div>
