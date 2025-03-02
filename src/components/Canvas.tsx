@@ -65,6 +65,7 @@ function Canvas({
     try {
       const dataUrl = canvas.toDataURL("image/png");
       await window.electron?.copyToClipboard(dataUrl);
+      await window.electron?.minimizeWindow?.();
     } catch (err) {
       console.error("Failed to copy image to clipboard:", err);
     }

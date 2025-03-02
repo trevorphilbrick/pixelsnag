@@ -251,6 +251,12 @@ const createWindow = (): void => {
     return process.env[key];
   });
 
+  ipcMain.handle("minimize-window", () => {
+    if (mainWindow) {
+      mainWindow.minimize();
+    }
+  });
+
   // set tray
   app.whenReady().then(() => {
     tray = new Tray(path.join(__dirname, iconHalf));

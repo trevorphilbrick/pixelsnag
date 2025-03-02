@@ -23,4 +23,5 @@ contextBridge.exposeInMainWorld("electron", {
   focusWindow: () => ipcRenderer.invoke("focus-window"),
   getEnv: (key: string) => ipcRenderer.invoke("get-env", key),
   getOs: () => ipcRenderer.invoke("get-os"),
+  minimizeWindow: () => ipcRenderer.invoke("minimize-window"),
 });
