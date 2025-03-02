@@ -1,13 +1,11 @@
-import { use } from "react";
-import { useAuth } from "../hooks/useAuth";
-import { SupabaseContext } from "../contexts/SupabaseContext";
-import { useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import SettingsBar from "../components/SettingsBar";
 
 function Settings() {
   return (
-    <div className=" h-screen w-screen">
+    <div className=" h-screen w-screen flex">
       <SettingsBar />
+      <Outlet />
     </div>
   );
 }
