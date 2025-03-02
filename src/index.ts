@@ -98,9 +98,10 @@ const createWindow = (): void => {
           ...details.responseHeaders,
           "Content-Security-Policy": [
             "default-src 'self' 'unsafe-inline' 'unsafe-eval' data:;",
-            "connect-src 'self' http://localhost:5001 https://cgkethnnnnsxbzvglfmn.supabase.co;",
+            "connect-src 'self' http://localhost:5001 https://cgkethnnnnsxbzvglfmn.supabase.co https://tally.so;",
             "img-src 'self' data: http://localhost:5001;",
             "script-src 'self' 'unsafe-inline' 'unsafe-eval';",
+            "frame-src 'self' https://tally.so;",
           ].join(" "),
         },
       });

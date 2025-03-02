@@ -54,7 +54,7 @@ const BackgroundImageCell = ({
       alt="background image"
       width={96}
       height={64}
-      className="rounded-md"
+      className="rounded-md cursor-pointer"
       onClick={onClick}
     />
   );
@@ -304,7 +304,7 @@ function Sidebar({
                 <div key={name} className="flex flex-col gap-2 mb-4 shrink-0">
                   <h3
                     className={clsx(
-                      "text-sm font-bold text-neutral-300 px-4 py-2 rounded-md",
+                      "text-sm font-bold text-neutral-300 px-4 py-2 rounded-md cursor-pointer",
                       selectedBackgroundCategory === name
                         ? "bg-blue-600 "
                         : "bg-neutral-800"
@@ -318,7 +318,7 @@ function Sidebar({
               <div className="flex flex-col gap-2 mb-4 shrink-0">
                 <h3
                   className={clsx(
-                    "text-sm font-bold text-neutral-300 px-4 py-2 rounded-md",
+                    "text-sm font-bold text-neutral-300 px-4 py-2 rounded-md cursor-pointer",
                     selectedBackgroundCategory === "custom"
                       ? "bg-blue-600 "
                       : "bg-neutral-800"
