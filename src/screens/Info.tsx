@@ -68,6 +68,27 @@ function Info() {
         <h4 className="text-neutral-200 text-xl font-bold">
           With the upload tool
         </h4>
+        <p className="text-neutral-200 text-sm mb-4">
+          The upload tool allows you to upload an image from your computer. You
+          can access it by clicking the blue "Select Image" button at the top of
+          the Sidebar.
+        </p>
+        <h3 className="text-neutral-200 text-2xl font-bold mb-4">
+          Customizing the screenshot
+        </h3>
+        <p className="text-neutral-200 text-sm mb-4">
+          You can customize the screenshot in several ways including padding,
+          border radius, shadow, and background.
+        </p>
+        <h3 className="text-neutral-200 text-2xl font-bold mb-4">
+          Sharing the Screenshot
+        </h3>
+        <p className="text-neutral-200 text-sm mb-4">
+          You can share the screenshot two ways. The first is by clicking the
+          "clipboard" button, which will copy it to your clipboard for pasting
+          (This will also minimize the app), and the other is the "Download"
+          button, which will download the image to your computer.
+        </p>
       </div>
     </div>
   );

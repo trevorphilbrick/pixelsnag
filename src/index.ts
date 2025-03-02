@@ -12,6 +12,10 @@ import {
 import * as path from "path";
 import { spawn } from "child_process";
 import { iconHalf } from "./images";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 let pythonProcess: any = null;
 let mainWindow: BrowserWindow | null = null;
 let tray: Tray | null = null;
@@ -94,7 +98,7 @@ const createWindow = (): void => {
           ...details.responseHeaders,
           "Content-Security-Policy": [
             "default-src 'self' 'unsafe-inline' 'unsafe-eval' data:;",
-            "connect-src 'self' http://localhost:5001;",
+            "connect-src 'self' http://localhost:5001 https://cgkethnnnnsxbzvglfmn.supabase.co;",
             "img-src 'self' data: http://localhost:5001;",
             "script-src 'self' 'unsafe-inline' 'unsafe-eval';",
           ].join(" "),
@@ -239,6 +243,17 @@ const createWindow = (): void => {
     if (mainWindow) {
       mainWindow.show();
       mainWindow.focus();
+    }
+  });
+
+  // Add IPC handler for getting environment variables
+  ipcMain.handle("get-env", (_, key: string) => {
+    return process.env[key];
+  });
+
+  ipcMain.handle("minimize-window", () => {
+    if (mainWindow) {
+      mainWindow.minimize();
     }
   });
 

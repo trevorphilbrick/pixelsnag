@@ -6,7 +6,7 @@ function RoundButton({
   disabled,
   text,
 }: {
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   onClick: () => void;
   disabled?: boolean;
   text?: string;
@@ -22,7 +22,7 @@ function RoundButton({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {icon}
+      {icon && icon}
 
       <span className="text-neutral-200 text-sm whitespace-nowrap">{text}</span>
     </button>

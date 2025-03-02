@@ -13,6 +13,8 @@ declare global {
       copyToClipboard: (dataUrl: string) => Promise<boolean>;
       focusWindow: () => Promise<void>;
       getOs: () => string;
+      getEnv: (key: string) => Promise<string>;
+      minimizeWindow: () => Promise<void>;
     };
   }
 }

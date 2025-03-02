@@ -18,6 +18,8 @@ import {
 import FileSelector from "./FileSelector";
 import SectionHeader from "./SectionHeader";
 import RangeSlider from "./RangeSlider";
+import CustomImageFileSelector from "./CustomImageFileSelector";
+
 const backgroundImages = [
   {
     name: "mesh gradients",
@@ -313,6 +315,19 @@ function Sidebar({
                   </h3>
                 </div>
               ))}
+              <div className="flex flex-col gap-2 mb-4 shrink-0">
+                <h3
+                  className={clsx(
+                    "text-sm font-bold text-neutral-300 px-4 py-2 rounded-md",
+                    selectedBackgroundCategory === "custom"
+                      ? "bg-blue-600 "
+                      : "bg-neutral-800"
+                  )}
+                  onClick={() => setSelectedBackgroundCategory("custom")}
+                >
+                  custom
+                </h3>
+              </div>
             </div>
             <div className="flex gap-2 flex-wrap">
               {backgroundImages
@@ -324,6 +339,9 @@ function Sidebar({
                     onClick={() => setBackgroundImageUrl(url)}
                   />
                 ))}
+              {selectedBackgroundCategory === "custom" && (
+                <CustomImageFileSelector setImageUrl={setBackgroundImageUrl} />
+              )}
             </div>
           </div>
         </div>
