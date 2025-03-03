@@ -10,6 +10,9 @@ import { FuseV1Options, FuseVersion } from "@electron/fuses";
 import { MakerDMG } from "@electron-forge/maker-dmg";
 import { mainConfig } from "./webpack.main.config";
 import { rendererConfig } from "./webpack.renderer.config";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const config: ForgeConfig = {
   packagerConfig: {
@@ -25,8 +28,8 @@ const config: ForgeConfig = {
     },
     osxNotarize: {
       appleId: "trevorphilbrick@outlook.com",
-      appleIdPassword: "",
-      teamId: "",
+      appleIdPassword: process.env.APPLE_ID_PASSWORD || "",
+      teamId: process.env.TEAM_ID || "",
     },
     icon: "/resources/icon",
     asar: {
