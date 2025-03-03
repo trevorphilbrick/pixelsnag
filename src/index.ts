@@ -12,9 +12,6 @@ import {
 import * as path from "path";
 import { spawn } from "child_process";
 import { iconHalf } from "./images";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 let pythonProcess: any = null;
 let mainWindow: BrowserWindow | null = null;
@@ -238,6 +235,9 @@ const createWindow = (): void => {
     interface EnvConfig {
       [key: string]: string | undefined;
     }
+
+    console.log("process.env.SUPABASE_API", process.env.SUPABASE_API);
+    console.log("process.env.SUPABASE_KEY", process.env.SUPABASE_KEY);
 
     const productionEnv: EnvConfig = {
       SUPABASE_API: process.env.SUPABASE_API,
