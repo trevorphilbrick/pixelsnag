@@ -32,7 +32,6 @@ function Canvas({
           return;
         }
         const availableSources = await window.electron.getSources();
-        console.log(availableSources);
         setSources(availableSources);
       } catch (error) {
         console.error("Failed to fetch sources:", error);
@@ -58,7 +57,6 @@ function Canvas({
   };
 
   const handleCopyToClipboard = async () => {
-    console.log("handleCopyToClipboard");
     const canvas = canvasRef.current;
     if (!canvas) return;
 

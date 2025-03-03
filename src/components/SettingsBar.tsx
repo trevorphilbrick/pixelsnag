@@ -67,7 +67,7 @@ function SettingsBar() {
       </div>
 
       <div className="absolute bottom-0 left-0 pb-4 px-4 flex flex-col gap-4 w-96">
-        <p className="text-neutral-200">{user?.email}</p>
+        <p className="text-neutral-400 text-sm">{user?.email}</p>
         <button
           className="bg-neutral-200 text-neutral-800 px-4 py-2 rounded-md"
           onClick={handleLogout}

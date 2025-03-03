@@ -16,5 +16,8 @@ declare global {
       getEnv: (key: string) => Promise<string>;
       minimizeWindow: () => Promise<void>;
     };
+    Tally?: {
+      loadEmbeds: () => void;
+    };
   }
 }

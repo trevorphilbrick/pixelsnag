@@ -1,7 +1,7 @@
 {
   "name": "pixel-snag",
   "productName": "PixelSnag",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "description": "PixelSnag",
   "main": ".webpack/main",
   "icon": "resources/icon",

@@ -28,8 +28,6 @@ function SourceSelection({
       return;
     }
 
-    console.log("Capturing full-resolution screenshot...");
-
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {

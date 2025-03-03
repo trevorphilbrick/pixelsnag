@@ -30,31 +30,16 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 function startPythonServer() {
   const isDev = process.env.NODE_ENV === "development";
 
-  console.log("isDev:", isDev);
-  console.log("__dirname:", __dirname);
-
   // In development, use the resources directory in project root
   // In production, use the resources directory in app.getAppPath()
   const resourcesPath = isDev
     ? path.join("resources", "python")
     : path.join(process.resourcesPath, "resources", "python");
 
-  console.log("Resources path:", resourcesPath);
-
   const executableName = process.platform === "win32" ? "server.exe" : "server";
   const pythonExecutable = path.join(resourcesPath, executableName);
 
-  console.log("Starting Python server from:", pythonExecutable);
-
   pythonProcess = spawn(pythonExecutable);
-
-  pythonProcess.stdout.on("data", (data: any) => {
-    console.log("Python server output:", data.toString());
-  });
-
-  pythonProcess.stderr.on("data", (data: any) => {
-    console.error("Python server error:", data.toString());
-  });
 }
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -81,7 +66,7 @@ const createWindow = (): void => {
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 900,
+    width: 940,
     height: 700,
     webPreferences: {
       nodeIntegration: false,
@@ -249,7 +234,17 @@ const createWindow = (): void => {
 
   // Add IPC handler for getting environment variables
   ipcMain.handle("get-env", (_, key: string) => {
-    return process.env[key];
+    // In production, we'll use a configuration object
+    interface EnvConfig {
+      [key: string]: string | undefined;
+    }
+
+    const productionEnv: EnvConfig = {
+      SUPABASE_API: process.env.SUPABASE_API,
+      SUPABASE_KEY: process.env.SUPABASE_KEY,
+    };
+
+    return productionEnv[key] || process.env[key];
   });
 
   ipcMain.handle("minimize-window", () => {

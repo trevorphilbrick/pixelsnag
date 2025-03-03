@@ -100,4 +100,6 @@ scripts/venv
 scripts/server.spec
 api-key/
 
+# config
+config.ts
 

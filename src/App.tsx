@@ -36,7 +36,6 @@ function AppRoutes() {
   }
 
   if (user && location.pathname === "/") {
-    console.log("User is authenticated, redirecting to editor");
     return <Navigate to="/editor" replace />;
   }
 

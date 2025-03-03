@@ -28,6 +28,7 @@ The PixelSnag Application is a simple application that allows you to snip images
 
 ## Building the application for distribution
 
+- if the version needs to be bumped, bump it in the `package.json`
 - make sure credentials are correct in forge.config.ts
 - `npm run make`
 - this will output the build to the `out` folder
