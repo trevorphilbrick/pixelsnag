@@ -65,11 +65,15 @@ function Sidebar({
   isSidebarOpen,
   screenshotUrl,
   setScreenshotUrl,
+  setAiDescription,
+  setIsAiDescriptionOpen,
 }: {
   ctx: CanvasRenderingContext2D | null;
   isSidebarOpen: boolean;
   screenshotUrl: string;
   setScreenshotUrl: (url: string) => void;
+  setAiDescription: (description: string) => void;
+  setIsAiDescriptionOpen: (open: boolean) => void;
 }) {
   const [backgroundImageUrl, setBackgroundImageUrl] =
     useState<string>(meshGradient1);
@@ -204,6 +208,9 @@ function Sidebar({
         canvasPadding / 2 + innerPadding, // add innerPadding to x position
         canvasPadding / 2 + innerPadding // add innerPadding to y position
       );
+
+      setAiDescription(null);
+      setIsAiDescriptionOpen(false);
     });
   }, [
     ctx,

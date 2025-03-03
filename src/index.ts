@@ -221,6 +221,17 @@ const createWindow = (): void => {
     }
   });
 
+  // Add IPC handler for text to clipboard
+  ipcMain.handle("copy-text-to-clipboard", async (_, text: string) => {
+    try {
+      clipboard.writeText(text);
+      return true;
+    } catch (error) {
+      console.error("Failed to copy text to clipboard:", error);
+      return false;
+    }
+  });
+
   // focus window
   ipcMain.handle("focus-window", () => {
     if (mainWindow) {

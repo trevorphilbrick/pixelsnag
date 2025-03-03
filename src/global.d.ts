@@ -15,6 +15,7 @@ declare global {
       getOs: () => string;
       getEnv: (key: string) => Promise<string>;
       minimizeWindow: () => Promise<void>;
+      copyTextToClipboard: (text: string) => Promise<boolean>;
     };
     Tally?: {
       loadEmbeds: () => void;
