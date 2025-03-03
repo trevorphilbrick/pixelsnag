@@ -80,7 +80,7 @@ const createWindow = (): void => {
           ...details.responseHeaders,
           "Content-Security-Policy": [
             "default-src 'self' 'unsafe-inline' 'unsafe-eval' data:;",
-            "connect-src 'self' http://localhost:5001 https://cgkethnnnnsxbzvglfmn.supabase.co https://tally.so;",
+            "connect-src 'self' http://localhost:5001 https://cgkethnnnnsxbzvglfmn.supabase.co https://tally.so https://api.openai.com;",
             "img-src 'self' data: http://localhost:5001;",
             "script-src 'self' 'unsafe-inline' 'unsafe-eval';",
             "frame-src 'self' https://tally.so;",
@@ -236,12 +236,10 @@ const createWindow = (): void => {
       [key: string]: string | undefined;
     }
 
-    console.log("process.env.SUPABASE_API", process.env.SUPABASE_API);
-    console.log("process.env.SUPABASE_KEY", process.env.SUPABASE_KEY);
-
     const productionEnv: EnvConfig = {
       SUPABASE_API: process.env.SUPABASE_API,
       SUPABASE_KEY: process.env.SUPABASE_KEY,
+      OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     };
 
     return productionEnv[key] || process.env[key];

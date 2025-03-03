@@ -6,6 +6,13 @@ import SourceSelection from "./SourceSelection";
 import RoundButton from "./RoundButton";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true,
+});
+
 function Canvas({
   setCtx,
   isSidebarOpen,
@@ -104,6 +111,40 @@ function Canvas({
       cleanup?.();
     };
   }, []);
+
+  const handleGenerateDescription = async () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    try {
+      // Convert canvas to base64 image
+      const imageBase64 = canvas.toDataURL("image/png").split(",")[1];
+
+      const response = await openai.chat.completions.create({
+        model: "gpt-4-turbo",
+        messages: [
+          {
+            role: "user",
+            content: [
+              { type: "text", text: "Please describe this image in detail." },
+              {
+                type: "image_url",
+                image_url: {
+                  url: `data:image/png;base64,${imageBase64}`,
+                },
+              },
+            ],
+          },
+        ],
+        max_tokens: 500,
+      });
+
+      console.log(response.choices[0]?.message?.content);
+      // You might want to store or display this description somewhere
+    } catch (error) {
+      console.error("Failed to generate description:", error);
+    }
+  };
 
   return (
     <>
@@ -258,6 +299,10 @@ function Canvas({
         </TransformWrapper>
       </div>
       <div className="absolute bottom-0 left-0 w-full h-16 bg-neutral-800 flex items-center pl-4 gap-2">
+        <RoundButton
+          onClick={handleGenerateDescription}
+          text="Generate AI Description"
+        />
         {user && (
           <RoundButton
             icon={
