@@ -185,14 +185,14 @@ function Canvas({
         {aiDescription && (
           <div
             className={clsx(
-              "absolute top-0 left-0 min-w-96 z-50 h-full w-96 transition-all duration-300 border-r border-neutral-700",
+              "absolute top-0  min-w-96 z-50 h-full w-96 transition-all duration-300 border-r border-neutral-700",
               isAiDescriptionOpen ? "left-0" : "-left-full"
             )}
           >
             <div className="bg-neutral-900 text-white p-4  h-full  overflow-y-scroll relative">
               <div className="flex justify-between items-center">
                 <RoundButton
-                  onClick={() => setIsAiDescriptionOpen(!isAiDescriptionOpen)}
+                  onClick={() => setIsAiDescriptionOpen(false)}
                   icon={
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
