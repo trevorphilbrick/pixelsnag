@@ -41,6 +41,124 @@ const backgroundImages = [
   },
 ];
 
+const aspectRatios = [
+  {
+    name: "Default",
+    width: 0,
+    height: 0,
+  },
+  {
+    name: "Instagram Post (Square)",
+    width: 1,
+    height: 1,
+  },
+  {
+    name: "Instagram Post (Portrait)",
+    width: 4,
+    height: 5,
+  },
+  {
+    name: "Instagram Post (Landscape)",
+    width: 1.91,
+    height: 1,
+  },
+  {
+    name: "Instagram Story & Reels",
+    width: 9,
+    height: 16,
+  },
+  {
+    name: "Instagram Profile Picture",
+    width: 1,
+    height: 1,
+  },
+  {
+    name: "Facebook Post (Square)",
+    width: 1,
+    height: 1,
+  },
+  {
+    name: "Facebook Post (Landscape)",
+    width: 1.91,
+    height: 1,
+  },
+  {
+    name: "Facebook Story",
+    width: 9,
+    height: 16,
+  },
+  {
+    name: "Facebook Cover Photo",
+    width: 16,
+    height: 9,
+  },
+  {
+    name: "Facebook Event Cover Photo",
+    width: 16,
+    height: 9,
+  },
+  {
+    name: "Facebook Profile Picture",
+    width: 1,
+    height: 1,
+  },
+  {
+    name: "Twitter (X) Post (Single Image)",
+    width: 16,
+    height: 9,
+  },
+  {
+    name: "Twitter (X) Header Image",
+    width: 3,
+    height: 1,
+  },
+  {
+    name: "Twitter (X) Profile Picture",
+    width: 1,
+    height: 1,
+  },
+  {
+    name: "LinkedIn Post Image",
+    width: 1.91,
+    height: 1,
+  },
+  {
+    name: "LinkedIn Profile Picture",
+    width: 1,
+    height: 1,
+  },
+  {
+    name: "LinkedIn Background Banner",
+    width: 4,
+    height: 1,
+  },
+  {
+    name: "LinkedIn Company Page Cover",
+    width: 1.91,
+    height: 1,
+  },
+  {
+    name: "YouTube Thumbnail",
+    width: 16,
+    height: 9,
+  },
+  {
+    name: "YouTube Channel Banner",
+    width: 16,
+    height: 9,
+  },
+  {
+    name: "TikTok Post (Video & Images)",
+    width: 9,
+    height: 16,
+  },
+  {
+    name: "TikTok Profile Picture",
+    width: 1,
+    height: 1,
+  },
+];
+
 const BackgroundImageCell = ({
   url,
   onClick,
@@ -75,13 +193,21 @@ function Sidebar({
     useState<string>(meshGradient1);
   const [selectedBackgroundCategory, setSelectedBackgroundCategory] =
     useState<string>(backgroundImages[0].name);
-
+  const [selectedAspectRatio, setSelectedAspectRatio] = useState<{
+    height: number;
+    width: number;
+    name: string;
+  } | null>({ name: "Default", height: 0, width: 0 });
   const [canvasPadding, setCanvasPadding] = useState<number>(48);
   const [innerPadding, setInnerPadding] = useState<number>(16);
   const [borderRadius, setBorderRadius] = useState<number>(12);
   const [shadowColor, setShadowColor] = useState<string>("rgba(0, 0, 0, 0.4)");
   const [shadowBlur, setShadowBlur] = useState<number>(20);
   const [shadowOffsetY, setShadowOffsetY] = useState<number>(8);
+
+  useEffect(() => {
+    console.log(selectedAspectRatio);
+  }, [selectedAspectRatio]);
 
   // handle screenshot loading
   useEffect(() => {
@@ -189,7 +315,7 @@ function Sidebar({
       ctx.arcTo(x, y, x + borderRadius, y, borderRadius);
       ctx.closePath();
 
-      // Fill with semi-transparent primary color
+      // Fill with primary color
       ctx.fillStyle = `rgb(${primaryColor})`;
       ctx.fill();
 
@@ -262,6 +388,31 @@ function Sidebar({
             step={1}
             onChange={(value) => setBorderRadius(value)}
           />
+          <label
+            htmlFor="borderRadius"
+            className="text-sm text-neutral-300 mb-2"
+          >
+            aspect ratio
+          </label>
+          <div className="flex gap-2  shrink-0 overflow-x-scroll scrollbar-hidden">
+            {aspectRatios.map(({ name, width, height }) => (
+              <div key={name} className="flex flex-col gap-2 mb-4 shrink-0">
+                <h3
+                  className={clsx(
+                    "text-sm font-bold text-neutral-300 px-4 py-2 rounded-md cursor-pointer",
+                    selectedAspectRatio?.name === name
+                      ? "bg-blue-600 "
+                      : "bg-neutral-800"
+                  )}
+                  onClick={() =>
+                    setSelectedAspectRatio({ name, height, width })
+                  }
+                >
+                  {name}
+                </h3>
+              </div>
+            ))}
+          </div>
         </div>
         <SectionHeader title="Shadow" />
         <div className="flex flex-col gap-2 bg-neutral-800 p-4 rounded-md shadow-md">
