@@ -224,8 +224,25 @@ function Sidebar({
     ]).then(() => {
       // Update canvas size to account for both padding values
       const totalPadding = canvasPadding + innerPadding * 2;
-      ctx.canvas.width = image.width + totalPadding;
-      ctx.canvas.height = image.height + totalPadding;
+      let canvasWidth = image.width + totalPadding;
+      let canvasHeight = image.height + totalPadding;
+
+      // Adjust canvas size based on selected aspect ratio
+      if (selectedAspectRatio && selectedAspectRatio.name !== "Default") {
+        const { width: aspectWidth, height: aspectHeight } =
+          selectedAspectRatio;
+        const currentAspectRatio = image.width / image.height;
+        const targetAspectRatio = aspectWidth / aspectHeight;
+
+        if (currentAspectRatio > targetAspectRatio) {
+          canvasHeight = canvasWidth / targetAspectRatio;
+        } else {
+          canvasWidth = canvasHeight * targetAspectRatio;
+        }
+      }
+
+      ctx.canvas.width = canvasWidth;
+      ctx.canvas.height = canvasHeight;
 
       // Create a temporary canvas to analyze the image
       const tempCanvas = document.createElement("canvas");
@@ -341,6 +358,7 @@ function Sidebar({
     shadowColor,
     shadowBlur,
     shadowOffsetY,
+    selectedAspectRatio,
   ]);
 
   return (
