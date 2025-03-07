@@ -303,8 +303,9 @@ function Sidebar({
       // Draw the background image with cover fill type
       ctx.drawImage(backgroundImage, offsetX, offsetY, drawWidth, drawHeight);
 
-      const x = canvasPadding / 2;
-      const y = canvasPadding / 2;
+      // Calculate centered position for the image with padding
+      const x = (ctx.canvas.width - (image.width + innerPadding * 2)) / 2;
+      const y = (ctx.canvas.height - (image.height + innerPadding * 2)) / 2;
       const width = image.width + innerPadding * 2;
       const height = image.height + innerPadding * 2;
 
@@ -344,8 +345,8 @@ function Sidebar({
       // Draw the image directly without clipping
       ctx.drawImage(
         image,
-        canvasPadding / 2 + innerPadding, // add innerPadding to x position
-        canvasPadding / 2 + innerPadding // add innerPadding to y position
+        x + innerPadding, // center the image with innerPadding
+        y + innerPadding // center the image with innerPadding
       );
     });
   }, [
