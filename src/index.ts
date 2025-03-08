@@ -25,10 +25,13 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 // start python server and log errors
 function startPythonServer() {
-  const isDev = process.env.NODE_ENV === "development";
+  // Only start if there isn't already a process running
+  if (pythonProcess) {
+    console.log("Python server is already running");
+    return;
+  }
 
-  // In development, use the resources directory in project root
-  // In production, use the resources directory in app.getAppPath()
+  const isDev = process.env.NODE_ENV === "development";
   const resourcesPath = isDev
     ? path.join("resources", "python")
     : path.join(process.resourcesPath, "resources", "python");
@@ -37,6 +40,17 @@ function startPythonServer() {
   const pythonExecutable = path.join(resourcesPath, executableName);
 
   pythonProcess = spawn(pythonExecutable);
+
+  // Add error handling and logging
+  pythonProcess.on("error", (err: Error) => {
+    console.error("Failed to start Python server:", err);
+    pythonProcess = null;
+  });
+
+  pythonProcess.on("exit", (code: number, signal: string) => {
+    console.log(`Python server exited with code ${code} and signal ${signal}`);
+    pythonProcess = null;
+  });
 }
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -47,7 +61,12 @@ if (require("electron-squirrel-startup")) {
 // kill python server and quit app
 const handleQuit = () => {
   if (pythonProcess) {
-    pythonProcess.kill();
+    try {
+      pythonProcess.kill();
+      pythonProcess = null;
+    } catch (err) {
+      console.error("Error killing Python server:", err);
+    }
   }
   globalShortcut.unregisterAll();
   if (mainWindow) {
