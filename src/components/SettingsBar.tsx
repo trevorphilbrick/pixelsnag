@@ -40,6 +40,7 @@ function SettingsBar() {
           }
           onClick={() => navigate("/")}
           text="Back"
+          lighter
         />
         <h1 className="text-2xl font-bold text-neutral-200">Settings</h1>
       </div>

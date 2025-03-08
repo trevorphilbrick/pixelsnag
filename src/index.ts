@@ -99,7 +99,7 @@ const createWindow = (): void => {
           ...details.responseHeaders,
           "Content-Security-Policy": [
             "default-src 'self' 'unsafe-inline' 'unsafe-eval' data:;",
-            "connect-src 'self' http://localhost:5001 https://cgkethnnnnsxbzvglfmn.supabase.co https://tally.so;",
+            "connect-src 'self' http://localhost:5001 https://cgkethnnnnsxbzvglfmn.supabase.co https://tally.so https://api.openai.com;",
             "img-src 'self' data: http://localhost:5001;",
             "script-src 'self' 'unsafe-inline' 'unsafe-eval';",
             "frame-src 'self' https://tally.so;",
@@ -240,6 +240,17 @@ const createWindow = (): void => {
     }
   });
 
+  // Add IPC handler for text to clipboard
+  ipcMain.handle("copy-text-to-clipboard", async (_, text: string) => {
+    try {
+      clipboard.writeText(text);
+      return true;
+    } catch (error) {
+      console.error("Failed to copy text to clipboard:", error);
+      return false;
+    }
+  });
+
   // focus window
   ipcMain.handle("focus-window", () => {
     if (mainWindow) {
@@ -258,6 +269,7 @@ const createWindow = (): void => {
     const productionEnv: EnvConfig = {
       SUPABASE_API: process.env.SUPABASE_API,
       SUPABASE_KEY: process.env.SUPABASE_KEY,
+      OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     };
 
     return productionEnv[key] || process.env[key];

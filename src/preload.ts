@@ -24,4 +24,6 @@ contextBridge.exposeInMainWorld("electron", {
   getEnv: (key: string) => ipcRenderer.invoke("get-env", key),
   getOs: () => ipcRenderer.invoke("get-os"),
   minimizeWindow: () => ipcRenderer.invoke("minimize-window"),
+  copyTextToClipboard: (text: string) =>
+    ipcRenderer.invoke("copy-text-to-clipboard", text),
 });

@@ -13,6 +13,7 @@ import { useAuth } from "./hooks/useAuth";
 import Login from "./screens/Login";
 import Settings from "./screens/Settings";
 import Feedback from "./components/Feedback";
+
 function AuthenticatedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
 
