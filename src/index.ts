@@ -236,9 +236,6 @@ const createWindow = (): void => {
       [key: string]: string | undefined;
     }
 
-    console.log("process.env.SUPABASE_API", process.env.SUPABASE_API);
-    console.log("process.env.SUPABASE_KEY", process.env.SUPABASE_KEY);
-
     const productionEnv: EnvConfig = {
       SUPABASE_API: process.env.SUPABASE_API,
       SUPABASE_KEY: process.env.SUPABASE_KEY,

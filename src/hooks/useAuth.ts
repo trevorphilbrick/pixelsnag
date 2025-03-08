@@ -19,14 +19,8 @@ export const useAuth = () => {
           data: { session: currentSession },
         } = await supabase.auth.getSession();
 
-        console.log(
-          "Initial session check:",
-          currentSession ? "Session exists" : "No session"
-        );
-
         // Set both session and user if we have a session
         if (currentSession) {
-          console.log("Setting user from session:", currentSession.user);
           setSession(currentSession);
           setUser(currentSession.user);
         }
@@ -43,11 +37,6 @@ export const useAuth = () => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, newSession) => {
-      console.log(
-        "Auth state changed:",
-        event,
-        newSession ? "Session exists" : "No session"
-      );
       setSession(newSession);
       setUser(newSession?.user ?? null);
       setLoading(false);

@@ -205,10 +205,6 @@ function Sidebar({
   const [shadowBlur, setShadowBlur] = useState<number>(20);
   const [shadowOffsetY, setShadowOffsetY] = useState<number>(8);
 
-  useEffect(() => {
-    console.log(selectedAspectRatio);
-  }, [selectedAspectRatio]);
-
   // handle screenshot loading
   useEffect(() => {
     if (!ctx) return;
