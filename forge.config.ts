@@ -31,7 +31,7 @@ const config: ForgeConfig = {
       appleIdPassword: process.env.APPLE_ID_PASSWORD || "",
       teamId: process.env.TEAM_ID || "",
     },
-    icon: "/resources/icon",
+    icon: "./src/images/icon",
     asar: {
       unpack: "resources/python/**/*",
     },
@@ -39,11 +39,11 @@ const config: ForgeConfig = {
   },
   rebuildConfig: {},
   makers: [
-    new MakerSquirrel({}),
+    new MakerSquirrel({ iconUrl: "./src/images/icon.ico" }),
     new MakerZIP({}, ["darwin", "linux"]),
     new MakerRpm({}),
     new MakerDeb({}),
-    new MakerDMG({}),
+    new MakerDMG({ icon: "./src/images/icon.icns" }),
   ],
   plugins: [
     new AutoUnpackNativesPlugin({}),

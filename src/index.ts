@@ -11,7 +11,7 @@ import {
 } from "electron";
 import * as path from "path";
 import { spawn } from "child_process";
-import { iconHalf } from "./images";
+import { icon } from "./images";
 
 let pythonProcess: any = null;
 let mainWindow: BrowserWindow | null = null;
@@ -283,7 +283,7 @@ const createWindow = (): void => {
 
   // set tray
   app.whenReady().then(() => {
-    tray = new Tray(path.join(__dirname, iconHalf));
+    tray = new Tray(path.join(__dirname, icon));
     const contextMenu = Menu.buildFromTemplate([
       {
         label: "Show",
