@@ -1,6 +1,5 @@
 import type { ForgeConfig } from "@electron-forge/shared-types";
-import { MakerSquirrel } from "@electron-forge/maker-squirrel";
-import { MakerZIP } from "@electron-forge/maker-zip";
+
 import { MakerDeb } from "@electron-forge/maker-deb";
 import { MakerRpm } from "@electron-forge/maker-rpm";
 import { AutoUnpackNativesPlugin } from "@electron-forge/plugin-auto-unpack-natives";
@@ -21,6 +20,7 @@ const config: ForgeConfig = {
       config: {
         bucket: "pixelsnag",
         public: true,
+        region: "us-east-2",
       },
     },
   ],
@@ -51,15 +51,14 @@ const config: ForgeConfig = {
     {
       name: "@electron-forge/maker-squirrel",
       config: (arch: any) => ({
-        remoteReleases: `https://pixelsnag.s3.amazonaws.com/pixel-snag/windows/${arch}`,
+        remoteReleases: `https://pixelsnag.s3.amazonaws.com/pixelnag/pixel-snag/windows/${arch}`,
+        icon: "./src/images/icon.ico",
       }),
-      icon: "./src/images/icon.ico",
     },
-    // new MakerZIP({}, ["darwin", "linux"]),
     {
       name: "@electron-forge/maker-zip",
       config: (arch: any) => ({
-        macUpdateManifestBaseUrl: `https://pixel-snag.s3.amazonaws.com/my-app-updates/darwin/${arch}`,
+        macUpdateManifestBaseUrl: `https://pixelsnag.s3.us-east-2.amazonaws.com/pixel-snag/darwin/arm64`,
       }),
       platforms: ["darwin", "linux"],
     },
