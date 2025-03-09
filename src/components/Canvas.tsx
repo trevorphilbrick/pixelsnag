@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
-import { TransformComponent } from "react-zoom-pan-pinch";
-import { TransformWrapper } from "react-zoom-pan-pinch";
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import SourceSelection from "./SourceSelection";
 import RoundButton from "./RoundButton";
 import { useNavigate } from "react-router-dom";
