@@ -15,6 +15,15 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const config: ForgeConfig = {
+  publishers: [
+    {
+      name: "@electron-forge/publisher-s3",
+      config: {
+        bucket: "pixelsnag",
+        public: true,
+      },
+    },
+  ],
   packagerConfig: {
     osxSign: {
       optionsForFile: () => {
@@ -39,8 +48,21 @@ const config: ForgeConfig = {
   },
   rebuildConfig: {},
   makers: [
-    new MakerSquirrel({ iconUrl: "./src/images/icon.ico" }),
-    new MakerZIP({}, ["darwin", "linux"]),
+    {
+      name: "@electron-forge/maker-squirrel",
+      config: (arch: any) => ({
+        remoteReleases: `https://pixelsnag.s3.amazonaws.com/pixel-snag/windows/${arch}`,
+      }),
+      icon: "./src/images/icon.ico",
+    },
+    // new MakerZIP({}, ["darwin", "linux"]),
+    {
+      name: "@electron-forge/maker-zip",
+      config: (arch: any) => ({
+        macUpdateManifestBaseUrl: `https://pixel-snag.s3.amazonaws.com/my-app-updates/darwin/${arch}`,
+      }),
+      platforms: ["darwin", "linux"],
+    },
     new MakerRpm({}),
     new MakerDeb({}),
     new MakerDMG({ icon: "./src/images/icon.icns" }),
