@@ -442,13 +442,8 @@ function Sidebar({
           <label htmlFor="shadowColor" className="text-sm text-neutral-300">
             color
           </label>
-          <input
-            type="color"
-            value={shadowColor}
-            onChange={(e) => setShadowColor(e.target.value)}
-            className="w-16 h-16  border-none bg-transparent shadow-md cursor-pointer"
-          />
-          <ColorSelector setColor={setShadowColor} />
+
+          <ColorSelector setColor={setShadowColor} value={shadowColor} />
           <label htmlFor="shadowBlur" className="text-sm     text-neutral-300">
             blur
           </label>
