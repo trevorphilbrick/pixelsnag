@@ -12,6 +12,7 @@ import {
 import * as path from "path";
 import { spawn } from "child_process";
 import { icon } from "./images";
+import { updateElectronApp, UpdateSourceType } from "update-electron-app";
 
 let pythonProcess: any = null;
 let mainWindow: BrowserWindow | null = null;
@@ -22,6 +23,13 @@ let tray: Tray | null = null;
 // whether you're running in development or production).
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+
+updateElectronApp({
+  updateSource: {
+    type: UpdateSourceType.StaticStorage,
+    baseUrl: `https://pixelsnag.s3.us-east-2.amazonaws.com/pixel-snag/${process.platform}/${process.arch}`,
+  },
+});
 
 // start python server and log errors
 function startPythonServer() {

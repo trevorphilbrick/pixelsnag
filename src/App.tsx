@@ -13,7 +13,7 @@ import { useAuth } from "./hooks/useAuth";
 import Login from "./screens/Login";
 import Settings from "./screens/Settings";
 import Feedback from "./components/Feedback";
-
+import About from "./components/About";
 function AuthenticatedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
 
@@ -70,7 +70,8 @@ function AppRoutes() {
           </AuthenticatedRoute>
         }
       >
-        <Route index element={<Navigate to="/account/feedback" replace />} />
+        <Route index element={<Navigate to="/account/about" replace />} />
+        <Route path="/account/about" element={<About />} />
         <Route path="/account/feedback" element={<Feedback />} />
       </Route>
     </Routes>
