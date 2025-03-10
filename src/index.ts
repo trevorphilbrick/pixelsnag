@@ -27,9 +27,8 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 updateElectronApp({
   updateSource: {
     type: UpdateSourceType.StaticStorage,
-    baseUrl: `https://pixelsnag.s3.us-east-2.amazonaws.com/pixel-snag/darwin/arm64`,
+    baseUrl: `https://pixelsnag.s3.us-east-2.amazonaws.com/pixel-snag/${process.platform}/${process.arch}`,
   },
-  updateInterval: "24 hours",
 });
 
 // start python server and log errors
