@@ -206,6 +206,7 @@ function Sidebar({
   const [canvasPadding, setCanvasPadding] = useState<number>(48);
   const [innerPadding, setInnerPadding] = useState<number>(16);
   const [borderRadius, setBorderRadius] = useState<number>(12);
+  const [paddingColor, setPaddingColor] = useState<string | null>(null);
   const [shadowColor, setShadowColor] = useState<string>("rgba(0, 0, 0, 0.4)");
   const [shadowBlur, setShadowBlur] = useState<number>(20);
   const [shadowOffsetY, setShadowOffsetY] = useState<number>(8);
@@ -285,6 +286,11 @@ function Sidebar({
         }
       }
 
+      // Determine the padding color
+      const effectivePaddingColor = paddingColor
+        ? paddingColor
+        : `rgb(${primaryColor})`;
+
       // Calculate aspect ratio
       const aspectRatio = backgroundImage.width / backgroundImage.height;
       let drawWidth = ctx.canvas.width;
@@ -315,7 +321,7 @@ function Sidebar({
       ctx.shadowBlur = shadowBlur;
       ctx.shadowOffsetY = shadowOffsetY;
 
-      // Draw background fill with padding using primary color
+      // Draw background fill with padding using effective padding color
       ctx.beginPath();
       ctx.moveTo(x + borderRadius, y);
       ctx.lineTo(x + width - borderRadius, y);
@@ -334,8 +340,7 @@ function Sidebar({
       ctx.arcTo(x, y, x + borderRadius, y, borderRadius);
       ctx.closePath();
 
-      // Fill with primary color
-      ctx.fillStyle = `rgb(${primaryColor})`;
+      ctx.fillStyle = effectivePaddingColor;
       ctx.fill();
 
       // Reset shadow settings before drawing the image
@@ -364,6 +369,7 @@ function Sidebar({
     shadowBlur,
     shadowOffsetY,
     selectedAspectRatio,
+    paddingColor,
   ]);
 
   return (
@@ -401,6 +407,21 @@ function Sidebar({
             step={1}
             onChange={(value) => setInnerPadding(value)}
           />
+          <label htmlFor="paddingColor" className="text-sm text-neutral-300">
+            padding color
+          </label>
+          <div className="flex flex-col gap-2 mb-4 shrink-0">
+            <h3
+              className={clsx(
+                "text-sm font-bold text-neutral-300 px-4 py-2 rounded-md cursor-pointer",
+                paddingColor === null ? "bg-blue-600 " : "bg-neutral-800"
+              )}
+              onClick={() => setPaddingColor(null)}
+            >
+              none
+            </h3>
+          </div>
+          <ColorSelector setColor={setPaddingColor} value={paddingColor} />
           <label htmlFor="borderRadius" className="text-sm text-neutral-300">
             border radius
           </label>
