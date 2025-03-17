@@ -17,6 +17,15 @@ import img3 from "./img-3.jpg";
 import placeholder from "./placeholder.png";
 import icon from "./icon.png";
 
+import crackedPaint1 from "./cracked-paint-1.png";
+import crackedPaint2 from "./cracked-paint-2.png";
+import crackedPaint3 from "./cracked-paint-3.png";
+import concrete1 from "./concrete-1.png";
+import pattern1 from "./pattern-1.png";
+import wall1 from "./wall-1.png";
+import stucko1 from "./stucko-1.png";
+import stucko2 from "./stucko-2.png";
+
 export {
   meshGradient1,
   meshGradient2,
@@ -33,4 +42,12 @@ export {
   img3,
   placeholder,
   icon,
+  crackedPaint1,
+  crackedPaint2,
+  crackedPaint3,
+  concrete1,
+  pattern1,
+  wall1,
+  stucko1,
+  stucko2,
 };

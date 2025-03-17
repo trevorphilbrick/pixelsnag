@@ -14,6 +14,14 @@ import {
   img1,
   img2,
   img3,
+  crackedPaint1,
+  crackedPaint2,
+  crackedPaint3,
+  concrete1,
+  pattern1,
+  wall1,
+  stucko1,
+  stucko2,
 } from "../images";
 import FileSelector from "./FileSelector";
 import SectionHeader from "./SectionHeader";
@@ -39,6 +47,19 @@ const backgroundImages = [
   {
     name: "images",
     backgrounds: [img1, img2, img3],
+  },
+  {
+    name: "creative",
+    backgrounds: [
+      crackedPaint1,
+      crackedPaint2,
+      crackedPaint3,
+      concrete1,
+      pattern1,
+      wall1,
+      stucko1,
+      stucko2,
+    ],
   },
 ];
 
@@ -167,15 +188,27 @@ const BackgroundImageCell = ({
   url: string;
   onClick: () => void;
 }) => {
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
-    <img
-      src={url}
-      alt="background image"
-      width={96}
-      height={64}
-      className="rounded-md cursor-pointer"
-      onClick={onClick}
-    />
+    <div className="relative w-24 h-16 max-w-24 max-h-16">
+      {isLoading && (
+        <div className="absolute inset-0 bg-neutral-600 animate-pulse rounded-md " />
+      )}
+      <img
+        src={url}
+        alt="background image"
+        width={96}
+        height={64}
+        loading="lazy"
+        fetchPriority="high"
+        onLoad={() => setIsLoading(false)}
+        className={`rounded-md cursor-pointer w-full h-full object-cover hover:scale-105 transition-all duration-300 ${
+          isLoading ? "opacity-0" : "opacity-100"
+        }`}
+        onClick={onClick}
+      />
+    </div>
   );
 };
 
@@ -488,7 +521,7 @@ function Sidebar({
           />
         </div>
         <SectionHeader title="Background image" />
-        <div className="flex flex-col gap-2 bg-neutral-800 p-4 rounded-md shadow-md  h-[306px]">
+        <div className="flex flex-col gap-2 bg-neutral-800 p-4 rounded-md shadow-md  ">
           <div className="">
             <div className="flex gap-2 overflow-x-scroll scrollbar-hidden mb-4">
               {backgroundImages.map(({ name }) => (

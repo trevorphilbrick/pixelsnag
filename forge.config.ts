@@ -51,7 +51,7 @@ const config: ForgeConfig = {
     {
       name: "@electron-forge/maker-squirrel",
       config: (arch: any) => ({
-        remoteReleases: `https://pixelsnag.s3.us-east-2.amazonaws.com/pixel-snag/win32/x64`,
+        // remoteReleases: `https://pixelsnag.s3.us-east-2.amazonaws.com/pixel-snag/win32/x64`,
         useCustomUpdateFeed: true,
         generateDeltas: false,
         icon: "./src/images/icon.ico",
