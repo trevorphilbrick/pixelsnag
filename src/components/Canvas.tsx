@@ -184,11 +184,11 @@ function Canvas({
         {aiDescription && (
           <div
             className={clsx(
-              "absolute top-0  min-w-96 z-50 h-full w-96 transition-all duration-300 border-r border-neutral-700",
+              "absolute  top-0  min-w-96 z-50 h-full w-96 transition-all duration-300 border-r border-neutral-700",
               isAiDescriptionOpen ? "left-0" : "-left-full"
             )}
           >
-            <div className="bg-neutral-900 text-white p-4  h-full  overflow-y-scroll relative">
+            <div className="bg-neutral-900 text-white pl-4 py-4  h-full   relative flex flex-col">
               <div className="flex justify-between items-center">
                 <RoundButton
                   onClick={() => setIsAiDescriptionOpen(false)}
@@ -211,12 +211,14 @@ function Canvas({
                   text="Close"
                   lighter
                 />
-                <h3 className="text-neutral-200 text-lg font-bold">
+                <h3 className="text-neutral-200 text-lg font-bold pr-4">
                   AI Description
                 </h3>
               </div>
-              <p className="p-4 text-neutral-200 text-sm">{aiDescription}</p>
-              <div className="absolute bottom-0 left-0 w-full p-4 ">
+              <p className="p-4 text-neutral-200 text-sm overflow-y-scroll">
+                {aiDescription}
+              </p>
+              <div className=" bg-neutral-900 pt-4 border-t border-neutral-700">
                 <RoundButton
                   onClick={() => {
                     window.electron?.copyTextToClipboard(aiDescription);
