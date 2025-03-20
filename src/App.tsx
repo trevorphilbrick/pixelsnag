@@ -3,7 +3,6 @@ import {
   Routes,
   Route,
   Navigate,
-  useLocation,
 } from "react-router-dom";
 import Editor from "./screens/Editor";
 import Info from "./screens/Info";
@@ -29,23 +28,15 @@ function AuthenticatedRoute({ children }: { children: React.ReactNode }) {
 }
 
 function AppRoutes() {
-  const { user, loading } = useAuth();
-  const location = useLocation();
+  const { loading } = useAuth();
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (user && location.pathname === "/") {
-    return <Navigate to="/editor" replace />;
-  }
-
   return (
     <Routes>
-      <Route
-        path="/"
-        element={user ? <Navigate to="/editor" replace /> : <Login />}
-      />
+      <Route path="/" element={<Login />} />
       <Route
         path="/editor"
         element={
