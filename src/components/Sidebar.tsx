@@ -22,6 +22,26 @@ import {
   wall1,
   stucko1,
   stucko2,
+  desktop1,
+  desktop2,
+  desktop3,
+  desktop4,
+  desktop5,
+  desktop6,
+  desktop7,
+  desktop8,
+  desktop9,
+  desktop10,
+  desktop1Thumb,
+  desktop2Thumb,
+  desktop3Thumb,
+  desktop4Thumb,
+  desktop5Thumb,
+  desktop6Thumb,
+  desktop7Thumb,
+  desktop8Thumb,
+  desktop9Thumb,
+  desktop10Thumb,
 } from "../images";
 import FileSelector from "./FileSelector";
 import SectionHeader from "./SectionHeader";
@@ -47,6 +67,33 @@ const backgroundImages = [
   {
     name: "images",
     backgrounds: [img1, img2, img3],
+  },
+  {
+    name: "desktops",
+    backgrounds: [
+      desktop1,
+      desktop2,
+      desktop3,
+      desktop4,
+      desktop5,
+      desktop6,
+      desktop7,
+      desktop8,
+      desktop9,
+      desktop10,
+    ],
+    thumbnails: [
+      desktop1Thumb,
+      desktop2Thumb,
+      desktop3Thumb,
+      desktop4Thumb,
+      desktop5Thumb,
+      desktop6Thumb,
+      desktop7Thumb,
+      desktop8Thumb,
+      desktop9Thumb,
+      desktop10Thumb,
+    ],
   },
   {
     name: "creative",
@@ -184,9 +231,11 @@ const aspectRatios = [
 const BackgroundImageCell = ({
   url,
   onClick,
+  thumbnailUrl,
 }: {
   url: string;
   onClick: () => void;
+  thumbnailUrl?: string;
 }) => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -196,7 +245,7 @@ const BackgroundImageCell = ({
         <div className="absolute inset-0 bg-neutral-600 animate-pulse rounded-md " />
       )}
       <img
-        src={url}
+        src={thumbnailUrl || url}
         alt="background image"
         width={96}
         height={64}
@@ -556,13 +605,28 @@ function Sidebar({
             <div className="flex gap-2 flex-wrap">
               {backgroundImages
                 .find(({ name }) => name === selectedBackgroundCategory)
-                ?.backgrounds.map((url) => (
-                  <BackgroundImageCell
-                    key={url}
-                    url={url}
-                    onClick={() => setBackgroundImageUrl(url)}
-                  />
-                ))}
+                ?.thumbnails?.map((thumbnailUrl, index) => {
+                  const fullImageUrl = backgroundImages.find(
+                    ({ name }) => name === selectedBackgroundCategory
+                  )?.backgrounds[index];
+                  return (
+                    <BackgroundImageCell
+                      key={thumbnailUrl}
+                      url={fullImageUrl}
+                      thumbnailUrl={thumbnailUrl}
+                      onClick={() => setBackgroundImageUrl(fullImageUrl)}
+                    />
+                  );
+                }) ??
+                backgroundImages
+                  .find(({ name }) => name === selectedBackgroundCategory)
+                  ?.backgrounds.map((url) => (
+                    <BackgroundImageCell
+                      key={url}
+                      url={url}
+                      onClick={() => setBackgroundImageUrl(url)}
+                    />
+                  ))}
               {selectedBackgroundCategory === "custom" && (
                 <CustomImageFileSelector setImageUrl={setBackgroundImageUrl} />
               )}
