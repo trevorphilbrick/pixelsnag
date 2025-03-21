@@ -38,7 +38,7 @@ function SettingsBar() {
               />
             </svg>
           }
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/editor")}
           text="Back"
           lighter
         />
