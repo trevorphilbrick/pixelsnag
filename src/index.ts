@@ -107,9 +107,9 @@ const createWindow = (): void => {
           ...details.responseHeaders,
           "Content-Security-Policy": [
             "default-src 'self' 'unsafe-inline' 'unsafe-eval' data:;",
-            "connect-src 'self' http://localhost:5001 https://cgkethnnnnsxbzvglfmn.supabase.co https://tally.so https://api.openai.com https://cgkethnnnnsxbzvglfmn.supabase.co/*;",
+            "connect-src 'self' http://localhost:5001 https://cgkethnnnnsxbzvglfmn.supabase.co https://tally.so https://api.openai.com https://cgkethnnnnsxbzvglfmn.supabase.co/* https://firebaseinstallations.googleapis.com https://www.googletagmanager.com https://firebase.googleapis.com https://www.google-analytics.com https://analytics.google.com;",
             "img-src 'self' data: http://localhost:5001;",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval';",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com ;",
             "frame-src 'self' https://tally.so;",
           ].join(" "),
         },
