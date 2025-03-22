@@ -3,16 +3,27 @@ import meshGradient2 from "./mesh-gradient-2.png";
 import meshGradient3 from "./mesh-gradient-3.png";
 import meshGradient4 from "./mesh-gradient-4.png";
 import meshGradient5 from "./mesh-gradient-5.png";
+import meshGradient6 from "./mesh-gradient-6.png";
+import meshGradient7 from "./mesh-gradient-7.png";
+import meshGradient8 from "./mesh-gradient-8.png";
+import meshGradient9 from "./mesh-gradient-9.png";
 
 import color1 from "./color-1.png";
 import color2 from "./color-2.png";
 import color3 from "./color-3.png";
 import color4 from "./color-4.png";
 import color5 from "./color-5.png";
+import color6 from "./color-6.png";
+import color7 from "./color-7.png";
+import color8 from "./color-8.png";
+import color9 from "./color-9.png";
 
 import img1 from "./img-1.jpg";
 import img2 from "./img-2.jpg";
 import img3 from "./img-3.jpg";
+import img4 from "./img-4.jpg";
+import img5 from "./img-5.jpg";
+import img6 from "./img-6.jpg";
 
 import placeholder from "./placeholder.png";
 import icon from "./icon.png";
@@ -22,9 +33,12 @@ import crackedPaint2 from "./cracked-paint-2.png";
 import crackedPaint3 from "./cracked-paint-3.png";
 import concrete1 from "./concrete-1.png";
 import pattern1 from "./pattern-1.png";
+import pattern2 from "./pattern-2.jpg";
+import pattern3 from "./pattern-3.jpg";
 import wall1 from "./wall-1.png";
 import stucko1 from "./stucko-1.png";
 import stucko2 from "./stucko-2.png";
+import paint1 from "./paint-1.jpg";
 
 import desktop1 from "./desktop-1.jpg";
 import desktop2 from "./desktop-2.jpg";
@@ -54,14 +68,25 @@ export {
   meshGradient3,
   meshGradient4,
   meshGradient5,
+  meshGradient6,
+  meshGradient7,
+  meshGradient8,
+  meshGradient9,
   color1,
   color2,
   color3,
   color4,
   color5,
+  color6,
+  color7,
+  color8,
+  color9,
   img1,
   img2,
   img3,
+  img4,
+  img5,
+  img6,
   placeholder,
   icon,
   crackedPaint1,
@@ -69,9 +94,12 @@ export {
   crackedPaint3,
   concrete1,
   pattern1,
+  pattern2,
+  pattern3,
   wall1,
   stucko1,
   stucko2,
+  paint1,
   desktop1,
   desktop2,
   desktop3,

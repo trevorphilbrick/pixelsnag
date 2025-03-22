@@ -13,11 +13,17 @@ import Login from "./screens/Login";
 import Settings from "./screens/Settings";
 import Feedback from "./components/Feedback";
 import About from "./components/About";
+import { PulseLoader } from "react-spinners";
+
 function AuthenticatedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <PulseLoader color="#155dfc" speedMultiplier={0.85} />
+      </div>
+    );
   }
 
   if (!user) {
@@ -31,7 +37,11 @@ function AppRoutes() {
   const { loading } = useAuth();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <PulseLoader color="#155dfc" speedMultiplier={0.85} />
+      </div>
+    );
   }
 
   return (
@@ -74,7 +84,11 @@ export default function App() {
   const supabaseKey = useEnvVariable("SUPABASE_KEY");
 
   if (!supabaseUrl || !supabaseKey) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <PulseLoader color="#155dfc" speedMultiplier={0.85} />
+      </div>
+    );
   }
 
   return (
