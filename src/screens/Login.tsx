@@ -1,10 +1,12 @@
 import meshGradient from "../images/mesh-gradient-1.png";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
-import { use } from "react";
+import { use, useEffect } from "react";
 import { SupabaseContext } from "../contexts/SupabaseContext";
 import { Formik, Form, Field, FormikHelpers } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
+import { analytics } from "../firebasecConfig";
+import { logEvent } from "firebase/analytics";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -20,17 +22,30 @@ const Login = () => {
   const navigate = useNavigate();
   const { auth, functions } = use(SupabaseContext);
 
+  useEffect(() => {
+    logEvent(analytics, "screen_view", {
+      firebase_screen: "Login",
+      firebase_screen_class: "Login",
+    });
+  }, []);
+
   const handleSubmit = async (
     values: LoginValues,
     { setStatus, setSubmitting }: FormikHelpers<LoginValues>
   ) => {
     try {
+      logEvent(analytics, "login_attempt", {
+        email: values.email,
+      });
       const { data, error } = await auth.signInWithPassword({
         email: values.email,
         password: values.password,
       });
 
       if (error) {
+        logEvent(analytics, "login_error", {
+          error: error.message,
+        });
         setStatus({ error: error.message });
         return;
       }
@@ -44,6 +59,9 @@ const Login = () => {
           });
 
         if (subscriptionError) {
+          logEvent(analytics, "login_error", {
+            error: subscriptionError.message,
+          });
           setStatus({ error: subscriptionError.message });
           return;
         }
@@ -56,11 +74,20 @@ const Login = () => {
           });
 
         if (accessCodeError) {
+          logEvent(analytics, "login_error", {
+            error: accessCodeError.message,
+          });
           setStatus({ error: accessCodeError.message });
           return;
         }
 
         if (subscriptionData?.isSubscribed || accessCodeData?.hasAccessCode) {
+          logEvent(analytics, "login_success", {
+            is_subscribed: subscriptionData?.isSubscribed,
+            has_access_code: accessCodeData?.hasAccessCode,
+            user_id: data.user.id,
+            email: values.email,
+          });
           setStatus({ success: "Login successful" });
           navigate("/editor");
         }

@@ -1,11 +1,13 @@
 import clsx from "clsx";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import SourceSelection from "./SourceSelection";
 import RoundButton from "./RoundButton";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import OpenAI from "openai";
+import { analytics } from "../firebasecConfig";
+import { logEvent } from "firebase/analytics";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -43,6 +45,7 @@ function Canvas({
 
   const navigate = useNavigate();
   const { user } = useAuth();
+
   useEffect(() => {
     const fetchSources = async () => {
       try {
@@ -61,6 +64,7 @@ function Canvas({
   }, []);
 
   const handleDownload = () => {
+    logEvent(analytics, "download_image");
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -76,6 +80,7 @@ function Canvas({
   };
 
   const handleCopyToClipboard = async () => {
+    logEvent(analytics, "copy_image_to_clipboard");
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -89,6 +94,7 @@ function Canvas({
   };
 
   const handleSnippingCapture = async () => {
+    logEvent(analytics, "capture_screen_snipping");
     setIsCapturing(true);
     try {
       const imageUrl = await window.screenshot.captureScreenRegion();
@@ -113,18 +119,17 @@ function Canvas({
   }, [setCtx]);
 
   useEffect(() => {
-    // Register the screenshot shortcut handler
     const cleanup = window.electron?.onScreenshotShortcut?.(
       handleSnippingCapture
     );
 
-    // Return cleanup function to remove the event listener
     return () => {
       cleanup?.();
     };
   }, []);
 
   const handleGenerateDescription = async () => {
+    logEvent(analytics, "generate_ai_description");
     setIsGeneratingDescription(true);
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -156,8 +161,14 @@ function Canvas({
       });
 
       setAiDescription(response.choices[0]?.message?.content);
+      logEvent(analytics, "generate_ai_description_success", {
+        description: response.choices[0]?.message?.content,
+      });
       setIsAiDescriptionOpen(true);
     } catch (error) {
+      logEvent(analytics, "generate_ai_description_error", {
+        error: error,
+      });
       setAiDescription("Failed to generate description");
       setIsAiDescriptionOpen(true);
     } finally {

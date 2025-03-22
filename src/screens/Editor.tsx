@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Canvas from "../components/Canvas";
 import Sidebar from "../components/Sidebar";
 import clsx from "clsx";
 import { placeholder } from "../images";
+import { analytics } from "../firebasecConfig";
+import { logEvent } from "firebase/analytics";
+
 function Editor() {
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -10,6 +13,13 @@ function Editor() {
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
   const [aiDescription, setAiDescription] = useState<string | null>(null);
   const [isAiDescriptionOpen, setIsAiDescriptionOpen] = useState(true);
+
+  useEffect(() => {
+    logEvent(analytics, "screen_view", {
+      firebase_screen: "Editor",
+      firebase_screen_class: "Editor",
+    });
+  }, []);
 
   return (
     <div
