@@ -66,6 +66,17 @@ const Login = () => {
           return;
         }
 
+        if (subscriptionData?.isSubscribed) {
+          logEvent(analytics, "login_success", {
+            is_subscribed: subscriptionData?.isSubscribed,
+            user_id: data.user.id,
+            email: values.email,
+          });
+          setStatus({ success: "Login successful" });
+          navigate("/editor");
+          return;
+        }
+
         const { data: accessCodeData, error: accessCodeError } =
           await functions.invoke("check-access-codes", {
             body: {
@@ -83,7 +94,6 @@ const Login = () => {
 
         if (subscriptionData?.isSubscribed || accessCodeData?.hasAccessCode) {
           logEvent(analytics, "login_success", {
-            is_subscribed: subscriptionData?.isSubscribed,
             has_access_code: accessCodeData?.hasAccessCode,
             user_id: data.user.id,
             email: values.email,
