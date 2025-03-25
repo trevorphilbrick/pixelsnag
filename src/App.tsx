@@ -34,7 +34,7 @@ function AuthenticatedRoute({ children }: { children: React.ReactNode }) {
 }
 
 function AppRoutes() {
-  const { loading } = useAuth();
+  const { loading, user } = useAuth();
 
   if (loading) {
     return (
@@ -46,7 +46,10 @@ function AppRoutes() {
 
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route
+        path="/"
+        element={user ? <Navigate to="/editor" replace /> : <Login />}
+      />
       <Route
         path="/editor"
         element={

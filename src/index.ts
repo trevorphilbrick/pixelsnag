@@ -161,9 +161,9 @@ const createWindow = (): void => {
   });
 
   // Open the DevTools.
-  if (process.env.NODE_ENV === "development") {
-    mainWindow.webContents.openDevTools();
-  }
+  // if (process.env.NODE_ENV === "development") {
+  mainWindow.webContents.openDevTools();
+  // }
 
   // Send available screen sources to React
   ipcMain.handle("get-sources", async () => {
