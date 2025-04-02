@@ -142,6 +142,7 @@ def capture_specific_monitor(monitor_number):
         filename = f"monitor_{monitor_number}_{timestamp}.png"
         mss.tools.to_png(screenshot.rgb, screenshot.size, output=filename)
         print(f"Saved screenshot of monitor {monitor_number} to {filename}")
+        return filename  # Return the path to the saved file
 
 if __name__ == "__main__":
     # Example usage

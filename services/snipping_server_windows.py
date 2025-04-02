@@ -1,5 +1,5 @@
 from flask import Flask, send_file, jsonify
-from snipping_tool import ScreenSnippingTool
+from snipping_tool import ScreenSnippingTool, capture_specific_monitor
 import threading
 import base64
 from PIL import Image
@@ -66,8 +66,50 @@ def capture_screenshot():
         'error': 'Screenshot cancelled or failed'
     })
 
+@app.route('/capture-monitor/<int:monitor_number>', methods=['GET'])
+def capture_monitor(monitor_number):
+    global screenshot_data
+    print(f"We are hitting the endpoint")
+    
+    def run_monitor_capture():
+        global screenshot_data
+        try:
+            screenshot_path = capture_specific_monitor(monitor_number)
+            if screenshot_path:
+                screenshot_data = convert_image_to_base64(screenshot_path)
+            else:
+                screenshot_data = None
+        except ValueError as e:
+            print(f"Error in monitor capture: {e}")
+            screenshot_data = None
+        except Exception as e:
+            print(f"Unexpected error in monitor capture: {e}")
+            screenshot_data = None
+
+    # Run the monitor capture in a separate thread
+    thread = threading.Thread(target=run_monitor_capture)
+    thread.start()
+    thread.join()
+
+    if screenshot_data:
+        return jsonify({
+            'success': True,
+            'image': screenshot_data
+        })
+    return jsonify({
+        'success': False,
+        'error': 'Monitor capture failed'
+    })
+
+@app.route('/test', methods=['GET'])
+def test_endpoint():
+    return jsonify({
+        'success': True,
+        'message': 'Windows snipping server is running successfully'
+    })
+
 def run_server():
-    app.run(port=5001)
+    app.run(port=5001, debug=True)
 
 if __name__ == '__main__':
     run_server()

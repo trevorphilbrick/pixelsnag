@@ -7,8 +7,6 @@ contextBridge.exposeInMainWorld("electron", {
     const sources = await ipcRenderer.invoke("get-sources");
     return sources;
   },
-  captureSource: (sourceId: string) =>
-    ipcRenderer.invoke("capture-source", sourceId),
   onScreenshotShortcut: (callback: () => void) => {
     const listener = () => callback();
     ipcRenderer.on("trigger-screenshot", listener);

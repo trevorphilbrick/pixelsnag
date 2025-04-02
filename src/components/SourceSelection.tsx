@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import clsx from "clsx";
+import { useState } from "react";
 
 function SourceSelection({
   showSourceSelection = false,
@@ -8,6 +8,7 @@ function SourceSelection({
   sources,
   setSelectedSource,
   setScreenshotUrl,
+  handleMonitorCapture,
 }: {
   showSourceSelection?: boolean;
   onClose: () => void;
@@ -15,7 +16,12 @@ function SourceSelection({
   sources: any[];
   setSelectedSource: (sourceId: string) => void;
   setScreenshotUrl: (url: string) => void;
+  handleMonitorCapture: (MonitorNumber: number) => Promise<void>;
 }) {
+  const [
+    toggleMinimizeWindowBeforeScreenshot,
+    setToggleMinimizeWindowBeforeScreenshot,
+  ] = useState(false);
   if (!showSourceSelection) return null;
 
   const handleClose = () => {
@@ -28,6 +34,25 @@ function SourceSelection({
       return;
     }
 
+    if (toggleMinimizeWindowBeforeScreenshot) {
+      await window.electron?.minimizeWindow();
+    }
+
+    if (
+      sources
+        .find(({ id }) => id == selectedSource)
+        .name.toLowerCase()
+        .includes("screen")
+    ) {
+      const screenNumber = parseInt(
+        sources.find(({ id }) => id == selectedSource).name.split(" ")[1]
+      );
+      console.log(screenNumber);
+      await handleMonitorCapture(screenNumber);
+      await window.electron?.focusWindow?.();
+      return;
+    }
+
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
@@ -35,10 +60,6 @@ function SourceSelection({
           mandatory: {
             chromeMediaSource: "desktop",
             chromeMediaSourceId: selectedSource,
-            minWidth: 1920,
-            minHeight: 1080,
-            maxWidth: 3840,
-            maxHeight: 2160,
             maxFrameRate: 1,
           },
         },
@@ -61,6 +82,7 @@ function SourceSelection({
           setScreenshotUrl(imageData);
         }, 500);
       };
+      await window.electron?.focusWindow?.();
     } catch (error) {
       console.error("Failed to capture screen:", error);
     }
@@ -137,13 +159,32 @@ function SourceSelection({
                 </div>
               ))}
           </div>
-
-          <button
-            className="bg-blue-500 p-2 rounded-md absolute bottom-4 left-4"
-            onClick={takeScreenshot}
-          >
-            Take Screenshot
-          </button>
+          <div className="absolute bottom-4 left-4 flex gap-4 items-center">
+            <button
+              className="bg-blue-500 p-2 rounded-md "
+              onClick={takeScreenshot}
+            >
+              Take Screenshot
+            </button>
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                onClick={() =>
+                  setToggleMinimizeWindowBeforeScreenshot(
+                    !toggleMinimizeWindowBeforeScreenshot
+                  )
+                }
+                className="
+                  appearance-none shrink-0 w-4 h-4  rounded-full  bg-neutral-400
+                focus:outline-none focus:ring-offset-0 focus:ring-1 focus:ring-blue-100
+                checked:bg-blue-500 
+                disabled:border-steel-400 disabled:bg-steel-400
+              "
+                checked={toggleMinimizeWindowBeforeScreenshot}
+              />
+              Hide PixelSnag in screenshot
+            </label>
+          </div>
         </div>
       </div>
     </div>
