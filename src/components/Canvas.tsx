@@ -113,7 +113,9 @@ function Canvas({
     logEvent(analytics, "capture_monitor");
     setIsCapturing(true);
     try {
-      const imageUrl = await window.screenshot.captureMonitor(monitorNumber);
+      const imageUrl = await window.screenshot.captureMonitor(
+        !Number.isNaN(monitorNumber) ? monitorNumber : 1
+      );
       if (imageUrl) {
         setScreenshotUrl(imageUrl);
         // Bring the window to the front after capturing
