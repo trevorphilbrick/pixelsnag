@@ -6,6 +6,7 @@ import {
   globalShortcut,
   nativeImage,
   clipboard,
+  Notification,
 } from "electron";
 import * as path from "path";
 import { spawn } from "child_process";

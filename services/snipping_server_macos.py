@@ -39,7 +39,7 @@ def capture_route():
         })
 
 def run_server():
-    app.run(port=5001, debug=True)
+    app.run(port=5001, debug=False, use_reloader=False)
 
 if __name__ == '__main__':
     run_server() 
