@@ -169,58 +169,6 @@ const createWindow = (): void => {
     }));
   });
 
-  // capture screenshot of window or screen
-  ipcMain.handle("capture-source", async (_, sourceId) => {
-    const sources = await desktopCapturer.getSources({
-      types: ["screen", "window"],
-    });
-    const source = sources.find((src) => src.id === sourceId);
-
-    if (!source) {
-      console.error("Source not found!");
-      return null;
-    }
-
-    // Get full-resolution image using getUserMedia
-    return new Promise((resolve) => {
-      navigator.mediaDevices
-        .getUserMedia({
-          audio: false,
-          video: {
-            mandatory: {
-              chromeMediaSource: "desktop",
-              chromeMediaSourceId: source.id,
-              minWidth: 1920, // Adjust width
-              minHeight: 1080, // Adjust height
-              maxWidth: 3840, // High-resolution limit
-              maxHeight: 2160,
-              maxFrameRate: 1,
-            },
-          } as any,
-        })
-        .then((stream) => {
-          const video = document.createElement("video");
-          video.srcObject = stream;
-          video.onloadedmetadata = () => {
-            video.play();
-            setTimeout(() => {
-              const canvas = document.createElement("canvas");
-              canvas.width = video.videoWidth;
-              canvas.height = video.videoHeight;
-              const ctx = canvas.getContext("2d");
-              ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-              stream.getTracks().forEach((track) => track.stop());
-              resolve(canvas.toDataURL("image/png"));
-            }, 500);
-          };
-        })
-        .catch((err) => {
-          console.error("Failed to capture screen:", err);
-          resolve(null);
-        });
-    });
-  });
-
   // get os
   ipcMain.handle("get-os", () => {
     return process.platform;

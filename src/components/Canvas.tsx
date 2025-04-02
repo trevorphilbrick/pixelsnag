@@ -100,11 +100,27 @@ function Canvas({
       const imageUrl = await window.screenshot.captureScreenRegion();
       if (imageUrl) {
         setScreenshotUrl(imageUrl);
-        // Bring the window to the front after capturing
         await window.electron?.focusWindow?.();
       }
     } catch (error) {
       console.error("Failed to capture screenshot:", error);
+    } finally {
+      setIsCapturing(false);
+    }
+  };
+
+  const handleMonitorCapture = async (monitorNumber: number) => {
+    logEvent(analytics, "capture_monitor");
+    setIsCapturing(true);
+    try {
+      const imageUrl = await window.screenshot.captureMonitor(monitorNumber);
+      if (imageUrl) {
+        setScreenshotUrl(imageUrl);
+        // Bring the window to the front after capturing
+        await window.electron?.focusWindow?.();
+      }
+    } catch (error) {
+      console.error("Failed to capture monitor:", error);
     } finally {
       setIsCapturing(false);
     }
@@ -185,6 +201,7 @@ function Canvas({
         selectedSource={selectedSource}
         setSelectedSource={setSelectedSource}
         setScreenshotUrl={setScreenshotUrl}
+        handleMonitorCapture={handleMonitorCapture}
       />
       <div
         className={clsx(

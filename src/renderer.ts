@@ -47,4 +47,25 @@ window.screenshot = {
       return null;
     }
   },
+
+  async captureMonitor(monitorNumber: number) {
+    try {
+      const response = await fetch(
+        `http://localhost:5001/capture-monitor/${monitorNumber}`
+      );
+      const data = await response.json();
+
+      console.log(data);
+
+      if (data.success) {
+        return `data:image/png;base64,${data.image}`;
+      } else {
+        console.error("Monitor capture failed:", data.error);
+        return null;
+      }
+    } catch (error) {
+      console.error("Error capturing monitor:", error);
+      return null;
+    }
+  },
 };
