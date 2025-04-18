@@ -6,43 +6,43 @@ import SidebarImageSelector from "./SidebarImageSelector";
 import SidebarSizingContainer from "./SidebarSizingContainer";
 import SidebarShadowSelector from "./SidebarShadowSelector";
 import SidebarBackgroundImageSelector from "./SidebarBackgroundImageSelector";
-import SectionHeader from "./SectionHeader";
-import CustomRangeSlider from "./RangeSlider";
+import { useCanvasContextStore } from "../zustand/useCanvasContextStore";
+import { useScreenshotStore } from "../zustand/useScreenshotStore";
+import { useCanvasStyleStore } from "../zustand/useCanvasStyleStore";
+import SidebarImageEditingSelector from "./SidebarImageEditingSelector";
 
 function Sidebar({
-  ctx,
   isSidebarOpen,
-  screenshotUrl,
-  setScreenshotUrl,
   setAiDescription,
   setIsAiDescriptionOpen,
 }: {
-  ctx: CanvasRenderingContext2D | null;
   isSidebarOpen: boolean;
-  screenshotUrl: string;
-  setScreenshotUrl: (url: string) => void;
   setAiDescription: (description: string) => void;
   setIsAiDescriptionOpen: (open: boolean) => void;
 }) {
-  const [backgroundImageUrl, setBackgroundImageUrl] =
-    useState<string>(meshGradient1);
-
   const [selectedAspectRatio, setSelectedAspectRatio] = useState<{
     height: number;
     width: number;
     name: string;
   } | null>({ name: "Default", height: 0, width: 0 });
-  const [canvasPadding, setCanvasPadding] = useState<number>(48);
-  const [innerPadding, setInnerPadding] = useState<number>(16);
-  const [borderRadius, setBorderRadius] = useState<number>(12);
-  const [paddingColor, setPaddingColor] = useState<string | null>(null);
-  const [shadowColor, setShadowColor] = useState<string>("rgba(0, 0, 0, 0.4)");
-  const [shadowBlur, setShadowBlur] = useState<number>(20);
-  const [shadowOffsetY, setShadowOffsetY] = useState<number>(8);
-  const [brightness, setBrightness] = useState(100);
-  const [contrast, setContrast] = useState(100);
-  const [opacity, setOpacity] = useState(100);
-  const [blur, setBlur] = useState(0);
+
+  const {
+    canvasPadding,
+    innerPadding,
+    borderRadius,
+    paddingColor,
+    shadowColor,
+    shadowBlur,
+    shadowOffsetY,
+    brightness,
+    contrast,
+    opacity,
+    blur,
+  } = useCanvasStyleStore();
+
+  const { ctx } = useCanvasContextStore();
+  const { screenshotUrl, setScreenshotUrl, backgroundImageUrl } =
+    useScreenshotStore();
 
   // handle screenshot loading
   useEffect(() => {
@@ -231,72 +231,12 @@ function Sidebar({
       <div className="flex flex-col gap-4 p-4">
         <SidebarImageSelector setScreenshotUrl={setScreenshotUrl} />
         <SidebarSizingContainer
-          canvasPadding={canvasPadding}
-          setCanvasPadding={setCanvasPadding}
-          innerPadding={innerPadding}
-          setInnerPadding={setInnerPadding}
-          paddingColor={paddingColor}
-          setPaddingColor={setPaddingColor}
-          borderRadius={borderRadius}
-          setBorderRadius={setBorderRadius}
-          selectedAspectRatio={selectedAspectRatio}
           setSelectedAspectRatio={setSelectedAspectRatio}
+          selectedAspectRatio={selectedAspectRatio}
         />
-        <SectionHeader title="Image Adjustment" />
-        <div className="flex flex-col gap-2 bg-neutral-800 p-4 rounded-md shadow-md">
-          <label htmlFor="brightness" className="text-sm text-neutral-300">
-            brightness
-          </label>
-          <CustomRangeSlider
-            min={0}
-            max={200}
-            step={1}
-            defaultValue={100}
-            onChange={setBrightness}
-          />
-          <label htmlFor="contrast" className="text-sm text-neutral-300">
-            contrast
-          </label>
-          <CustomRangeSlider
-            min={0}
-            max={200}
-            step={1}
-            defaultValue={100}
-            onChange={setContrast}
-          />
-          <label htmlFor="opacity" className="text-sm text-neutral-300">
-            opacity
-          </label>
-          <CustomRangeSlider
-            min={0}
-            max={100}
-            step={1}
-            defaultValue={100}
-            onChange={setOpacity}
-          />
-          <label htmlFor="blur" className="text-sm text-neutral-300">
-            background blur
-          </label>
-          <CustomRangeSlider
-            min={0}
-            max={200}
-            step={1}
-            defaultValue={0}
-            onChange={setBlur}
-          />
-        </div>
-        <SidebarShadowSelector
-          shadowColor={shadowColor}
-          setShadowColor={setShadowColor}
-          shadowBlur={shadowBlur}
-          setShadowBlur={setShadowBlur}
-          shadowOffsetY={shadowOffsetY}
-          setShadowOffsetY={setShadowOffsetY}
-        />
-        <SidebarBackgroundImageSelector
-          backgroundImageUrl={backgroundImageUrl}
-          setBackgroundImageUrl={setBackgroundImageUrl}
-        />
+        <SidebarImageEditingSelector />
+        <SidebarShadowSelector />
+        <SidebarBackgroundImageSelector />
       </div>
     </div>
   );

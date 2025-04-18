@@ -1,34 +1,33 @@
 import ColorSelector from "./ColorSelector";
 import RangeSlider from "./RangeSlider";
 import SectionHeader from "./SectionHeader";
+import { useCanvasStyleStore } from "../zustand/useCanvasStyleStore";
 
-interface SidebarShadowSelectorProps {
-  shadowColor: string;
-  setShadowColor: (color: string) => void;
-  shadowBlur: number;
-  setShadowBlur: (blur: number) => void;
-  shadowOffsetY: number;
-  setShadowOffsetY: (offset: number) => void;
-}
+function SidebarShadowSelector() {
+  const {
+    shadowColor,
+    shadowBlur,
+    shadowOffsetY,
+    setShadowColor,
+    setShadowBlur,
+    setShadowOffsetY,
+    resetShadowState,
+  } = useCanvasStyleStore();
 
-function SidebarShadowSelector({
-  shadowColor,
-  setShadowColor,
-  shadowBlur,
-  setShadowBlur,
-  shadowOffsetY,
-  setShadowOffsetY,
-}: SidebarShadowSelectorProps) {
   return (
     <>
-      <SectionHeader title="Shadow" />
+      <SectionHeader
+        title="Shadow"
+        leftText="reset"
+        leftFunction={resetShadowState}
+      />
       <div className="flex flex-col gap-2 bg-neutral-800 p-4 rounded-md shadow-md">
         <label htmlFor="shadowColor" className="text-sm text-neutral-300">
           color
         </label>
 
         <ColorSelector setColor={setShadowColor} value={shadowColor} />
-        <label htmlFor="shadowBlur" className="text-sm     text-neutral-300">
+        <label htmlFor="shadowBlur" className="text-sm text-neutral-300">
           blur
         </label>
 

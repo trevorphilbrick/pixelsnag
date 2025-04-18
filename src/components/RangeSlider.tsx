@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 const CustomRangeSlider = ({
   min = 0,
   max = 100,
@@ -13,15 +11,6 @@ const CustomRangeSlider = ({
   defaultValue: number;
   onChange: (value: number) => void;
 }) => {
-  const [value, setValue] = useState(defaultValue);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(parseInt(e.target.value));
-    if (onChange) {
-      onChange(parseInt(e.target.value));
-    }
-  };
-
   return (
     <div className="flex flex-col items-center w-full my-2">
       <input
@@ -29,8 +18,8 @@ const CustomRangeSlider = ({
         min={min}
         max={max}
         step={step}
-        value={value}
-        onChange={handleChange}
+        value={defaultValue}
+        onChange={(e) => onChange(parseInt(e.target.value))}
         className="w-full max-w-md appearance-none bg-transparent focus:outline-none"
       />
       {/* eslint-disable-next-line */}

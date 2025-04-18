@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Canvas from "../components/Canvas";
 import Sidebar from "../components/Sidebar";
 import clsx from "clsx";
-import { placeholder } from "../images";
 import { analytics } from "../firebasecConfig";
 import { logEvent } from "firebase/analytics";
 
 function Editor() {
-  const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [screenshotUrl, setScreenshotUrl] = useState<string>(placeholder);
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
   const [aiDescription, setAiDescription] = useState<string | null>(null);
   const [isAiDescriptionOpen, setIsAiDescriptionOpen] = useState(true);
@@ -28,10 +25,8 @@ function Editor() {
       )}
     >
       <Canvas
-        setCtx={setCtx}
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
-        setScreenshotUrl={setScreenshotUrl}
         isGeneratingDescription={isGeneratingDescription}
         setIsGeneratingDescription={setIsGeneratingDescription}
         aiDescription={aiDescription}
@@ -40,10 +35,7 @@ function Editor() {
         setIsAiDescriptionOpen={setIsAiDescriptionOpen}
       />
       <Sidebar
-        ctx={ctx}
         isSidebarOpen={isSidebarOpen}
-        screenshotUrl={screenshotUrl}
-        setScreenshotUrl={setScreenshotUrl}
         setAiDescription={setAiDescription}
         setIsAiDescriptionOpen={setIsAiDescriptionOpen}
       />
