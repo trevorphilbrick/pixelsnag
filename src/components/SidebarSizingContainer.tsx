@@ -147,11 +147,16 @@ function SidebarSizingContainer({
     setInnerPadding,
     setPaddingColor,
     setBorderRadius,
+    resetSizingState,
   } = useCanvasStyleStore();
 
   return (
     <>
-      <SectionHeader title="Sizing" />
+      <SectionHeader
+        title="Sizing"
+        leftText="reset"
+        leftFunction={resetSizingState}
+      />
       <div className="flex flex-col gap-2 bg-neutral-800 p-4 rounded-md shadow-md">
         <label htmlFor="canvasPadding" className="text-sm text-neutral-300">
           background size

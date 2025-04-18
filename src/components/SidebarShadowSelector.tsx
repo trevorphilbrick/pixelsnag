@@ -11,11 +11,16 @@ function SidebarShadowSelector() {
     setShadowColor,
     setShadowBlur,
     setShadowOffsetY,
+    resetShadowState,
   } = useCanvasStyleStore();
 
   return (
     <>
-      <SectionHeader title="Shadow" />
+      <SectionHeader
+        title="Shadow"
+        leftText="reset"
+        leftFunction={resetShadowState}
+      />
       <div className="flex flex-col gap-2 bg-neutral-800 p-4 rounded-md shadow-md">
         <label htmlFor="shadowColor" className="text-sm text-neutral-300">
           color

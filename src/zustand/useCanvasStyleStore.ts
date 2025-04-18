@@ -1,5 +1,35 @@
 import { create } from "zustand";
 
+export const initialCanvasStyleState: Omit<
+  CanvasStyleState,
+  | "setCanvasPadding"
+  | "setInnerPadding"
+  | "setBorderRadius"
+  | "setPaddingColor"
+  | "setShadowColor"
+  | "setShadowBlur"
+  | "setShadowOffsetY"
+  | "setBrightness"
+  | "setContrast"
+  | "setOpacity"
+  | "setBlur"
+  | "resetSizingState"
+  | "resetImageAdjustmentState"
+  | "resetShadowState"
+> = {
+  canvasPadding: 48,
+  innerPadding: 16,
+  borderRadius: 12,
+  paddingColor: null,
+  shadowColor: "rgba(0, 0, 0, 0.4)",
+  shadowBlur: 20,
+  shadowOffsetY: 8,
+  brightness: 100,
+  contrast: 100,
+  opacity: 100,
+  blur: 0,
+};
+
 interface CanvasStyleState {
   canvasPadding: number;
   innerPadding: number;
@@ -23,20 +53,13 @@ interface CanvasStyleState {
   setContrast: (contrast: number) => void;
   setOpacity: (opacity: number) => void;
   setBlur: (blur: number) => void;
+  resetSizingState: () => void;
+  resetImageAdjustmentState: () => void;
+  resetShadowState: () => void;
 }
 
 export const useCanvasStyleStore = create<CanvasStyleState>((set) => ({
-  canvasPadding: 48,
-  innerPadding: 16,
-  borderRadius: 12,
-  paddingColor: null,
-  shadowColor: "rgba(0, 0, 0, 0.4)",
-  shadowBlur: 20,
-  shadowOffsetY: 8,
-  brightness: 100,
-  contrast: 100,
-  opacity: 100,
-  blur: 0,
+  ...initialCanvasStyleState,
   setCanvasPadding: (padding) => set({ canvasPadding: padding }),
   setInnerPadding: (padding) => set({ innerPadding: padding }),
   setBorderRadius: (radius) => set({ borderRadius: radius }),
@@ -48,4 +71,24 @@ export const useCanvasStyleStore = create<CanvasStyleState>((set) => ({
   setContrast: (contrast) => set({ contrast: contrast }),
   setOpacity: (opacity) => set({ opacity: opacity }),
   setBlur: (blur) => set({ blur: blur }),
+  resetSizingState: () =>
+    set({
+      canvasPadding: initialCanvasStyleState.canvasPadding,
+      innerPadding: initialCanvasStyleState.innerPadding,
+      paddingColor: initialCanvasStyleState.paddingColor,
+      borderRadius: initialCanvasStyleState.borderRadius,
+    }),
+  resetImageAdjustmentState: () =>
+    set({
+      brightness: initialCanvasStyleState.brightness,
+      contrast: initialCanvasStyleState.contrast,
+      opacity: initialCanvasStyleState.opacity,
+      blur: initialCanvasStyleState.blur,
+    }),
+  resetShadowState: () =>
+    set({
+      shadowColor: initialCanvasStyleState.shadowColor,
+      shadowBlur: initialCanvasStyleState.shadowBlur,
+      shadowOffsetY: initialCanvasStyleState.shadowOffsetY,
+    }),
 }));

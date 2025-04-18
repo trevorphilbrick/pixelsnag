@@ -4,11 +4,24 @@ import SectionHeader from "./SectionHeader";
 import { useCanvasStyleStore } from "../zustand/useCanvasStyleStore";
 
 function SidebarImageEditingSelector() {
-  const { setBrightness, setBlur, setContrast, setOpacity } =
-    useCanvasStyleStore();
+  const {
+    brightness,
+    blur,
+    contrast,
+    opacity,
+    setBrightness,
+    setBlur,
+    setContrast,
+    setOpacity,
+    resetImageAdjustmentState,
+  } = useCanvasStyleStore();
   return (
     <>
-      <SectionHeader title="Image Adjustment" />
+      <SectionHeader
+        title="Image Adjustment"
+        leftText="reset"
+        leftFunction={resetImageAdjustmentState}
+      />
       <div className="flex flex-col gap-2 bg-neutral-800 p-4 rounded-md shadow-md">
         <label htmlFor="brightness" className="text-sm text-neutral-300">
           brightness
@@ -17,7 +30,7 @@ function SidebarImageEditingSelector() {
           min={0}
           max={200}
           step={1}
-          defaultValue={100}
+          defaultValue={brightness}
           onChange={setBrightness}
         />
         <label htmlFor="contrast" className="text-sm text-neutral-300">
@@ -27,7 +40,7 @@ function SidebarImageEditingSelector() {
           min={0}
           max={200}
           step={1}
-          defaultValue={100}
+          defaultValue={contrast}
           onChange={setContrast}
         />
         <label htmlFor="opacity" className="text-sm text-neutral-300">
@@ -37,7 +50,7 @@ function SidebarImageEditingSelector() {
           min={0}
           max={100}
           step={1}
-          defaultValue={100}
+          defaultValue={opacity}
           onChange={setOpacity}
         />
         <label htmlFor="blur" className="text-sm text-neutral-300">
@@ -47,7 +60,7 @@ function SidebarImageEditingSelector() {
           min={0}
           max={200}
           step={1}
-          defaultValue={0}
+          defaultValue={blur}
           onChange={setBlur}
         />
       </div>
