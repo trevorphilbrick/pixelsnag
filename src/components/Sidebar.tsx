@@ -1,296 +1,13 @@
 import { useEffect, useState } from "react";
 import clsx from "clsx";
-import {
-  meshGradient1,
-  meshGradient2,
-  meshGradient3,
-  meshGradient4,
-  meshGradient5,
-  meshGradient6,
-  meshGradient7,
-  meshGradient8,
-  meshGradient9,
-  color1,
-  color2,
-  color3,
-  color4,
-  color5,
-  color6,
-  color7,
-  color8,
-  color9,
-  img1,
-  img2,
-  img3,
-  img4,
-  img5,
-  img6,
-  crackedPaint1,
-  crackedPaint2,
-  crackedPaint3,
-  concrete1,
-  pattern1,
-  pattern2,
-  pattern3,
-  wall1,
-  stucko1,
-  stucko2,
-  paint1,
-  desktop1,
-  desktop2,
-  desktop3,
-  desktop4,
-  desktop5,
-  desktop6,
-  desktop7,
-  desktop8,
-  desktop9,
-  desktop10,
-  desktop1Thumb,
-  desktop2Thumb,
-  desktop3Thumb,
-  desktop4Thumb,
-  desktop5Thumb,
-  desktop6Thumb,
-  desktop7Thumb,
-  desktop8Thumb,
-  desktop9Thumb,
-  desktop10Thumb,
-} from "../images";
-import FileSelector from "./FileSelector";
+import { meshGradient1 } from "../images";
+
+import SidebarImageSelector from "./SidebarImageSelector";
+import SidebarSizingContainer from "./SidebarSizingContainer";
+import SidebarShadowSelector from "./SidebarShadowSelector";
+import SidebarBackgroundImageSelector from "./SidebarBackgroundImageSelector";
 import SectionHeader from "./SectionHeader";
-import RangeSlider from "./RangeSlider";
-import CustomImageFileSelector from "./CustomImageFileSelector";
-import ColorSelector from "./ColorSelector";
-
-const backgroundImages = [
-  {
-    name: "mesh gradients",
-    backgrounds: [
-      meshGradient1,
-      meshGradient2,
-      meshGradient3,
-      meshGradient4,
-      meshGradient5,
-      meshGradient6,
-      meshGradient7,
-      meshGradient8,
-      meshGradient9,
-    ],
-  },
-  {
-    name: "solid colors",
-    backgrounds: [
-      color1,
-      color2,
-      color3,
-      color4,
-      color5,
-      color6,
-      color7,
-      color8,
-      color9,
-    ],
-  },
-  {
-    name: "images",
-    backgrounds: [img1, img2, img3, img4, img5, img6],
-  },
-  {
-    name: "desktops",
-    backgrounds: [
-      desktop1,
-      desktop2,
-      desktop3,
-      desktop4,
-      desktop5,
-      desktop6,
-      desktop7,
-      desktop8,
-      desktop9,
-      desktop10,
-    ],
-    thumbnails: [
-      desktop1Thumb,
-      desktop2Thumb,
-      desktop3Thumb,
-      desktop4Thumb,
-      desktop5Thumb,
-      desktop6Thumb,
-      desktop7Thumb,
-      desktop8Thumb,
-      desktop9Thumb,
-      desktop10Thumb,
-    ],
-  },
-  {
-    name: "creative",
-    backgrounds: [
-      crackedPaint1,
-      crackedPaint2,
-      crackedPaint3,
-      concrete1,
-      pattern1,
-      pattern2,
-      pattern3,
-      wall1,
-      stucko1,
-      stucko2,
-      paint1,
-    ],
-  },
-];
-
-const aspectRatios = [
-  {
-    name: "Default",
-    width: 0,
-    height: 0,
-  },
-  {
-    name: "Instagram Post (Square)",
-    width: 1,
-    height: 1,
-  },
-  {
-    name: "Instagram Post (Portrait)",
-    width: 4,
-    height: 5,
-  },
-  {
-    name: "Instagram Post (Landscape)",
-    width: 1.91,
-    height: 1,
-  },
-  {
-    name: "Instagram Story & Reels",
-    width: 9,
-    height: 16,
-  },
-  {
-    name: "Instagram Profile Picture",
-    width: 1,
-    height: 1,
-  },
-  {
-    name: "Facebook Post (Square)",
-    width: 1,
-    height: 1,
-  },
-  {
-    name: "Facebook Post (Landscape)",
-    width: 1.91,
-    height: 1,
-  },
-  {
-    name: "Facebook Story",
-    width: 9,
-    height: 16,
-  },
-  {
-    name: "Facebook Cover Photo",
-    width: 16,
-    height: 9,
-  },
-  {
-    name: "Facebook Event Cover Photo",
-    width: 16,
-    height: 9,
-  },
-  {
-    name: "Facebook Profile Picture",
-    width: 1,
-    height: 1,
-  },
-  {
-    name: "Twitter (X) Post (Single Image)",
-    width: 16,
-    height: 9,
-  },
-  {
-    name: "Twitter (X) Header Image",
-    width: 3,
-    height: 1,
-  },
-  {
-    name: "Twitter (X) Profile Picture",
-    width: 1,
-    height: 1,
-  },
-  {
-    name: "LinkedIn Post Image",
-    width: 1.91,
-    height: 1,
-  },
-  {
-    name: "LinkedIn Profile Picture",
-    width: 1,
-    height: 1,
-  },
-  {
-    name: "LinkedIn Background Banner",
-    width: 4,
-    height: 1,
-  },
-  {
-    name: "LinkedIn Company Page Cover",
-    width: 1.91,
-    height: 1,
-  },
-  {
-    name: "YouTube Thumbnail",
-    width: 16,
-    height: 9,
-  },
-  {
-    name: "YouTube Channel Banner",
-    width: 16,
-    height: 9,
-  },
-  {
-    name: "TikTok Post (Video & Images)",
-    width: 9,
-    height: 16,
-  },
-  {
-    name: "TikTok Profile Picture",
-    width: 1,
-    height: 1,
-  },
-];
-
-const BackgroundImageCell = ({
-  url,
-  onClick,
-  thumbnailUrl,
-}: {
-  url: string;
-  onClick: () => void;
-  thumbnailUrl?: string;
-}) => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  return (
-    <div className="relative w-24 h-16 max-w-24 max-h-16">
-      {isLoading && (
-        <div className="absolute inset-0 bg-neutral-600 animate-pulse rounded-md " />
-      )}
-      <img
-        src={thumbnailUrl || url}
-        alt="background image"
-        width={96}
-        height={64}
-        loading="lazy"
-        fetchPriority="high"
-        onLoad={() => setIsLoading(false)}
-        className={`rounded-md cursor-pointer w-full h-full object-cover hover:scale-105 transition-all duration-300 ${
-          isLoading ? "opacity-0" : "opacity-100"
-        }`}
-        onClick={onClick}
-      />
-    </div>
-  );
-};
+import CustomRangeSlider from "./RangeSlider";
 
 function Sidebar({
   ctx,
@@ -309,8 +26,7 @@ function Sidebar({
 }) {
   const [backgroundImageUrl, setBackgroundImageUrl] =
     useState<string>(meshGradient1);
-  const [selectedBackgroundCategory, setSelectedBackgroundCategory] =
-    useState<string>(backgroundImages[0].name);
+
   const [selectedAspectRatio, setSelectedAspectRatio] = useState<{
     height: number;
     width: number;
@@ -323,6 +39,10 @@ function Sidebar({
   const [shadowColor, setShadowColor] = useState<string>("rgba(0, 0, 0, 0.4)");
   const [shadowBlur, setShadowBlur] = useState<number>(20);
   const [shadowOffsetY, setShadowOffsetY] = useState<number>(8);
+  const [brightness, setBrightness] = useState(100);
+  const [contrast, setContrast] = useState(100);
+  const [opacity, setOpacity] = useState(100);
+  const [blur, setBlur] = useState(0);
 
   // handle screenshot loading
   useEffect(() => {
@@ -420,8 +140,13 @@ function Sidebar({
       const offsetX = (ctx.canvas.width - drawWidth) / 2;
       const offsetY = (ctx.canvas.height - drawHeight) / 2;
 
+      // Apply blur only to the background image
+      ctx.filter = `blur(${blur / 10}px)`;
       // Draw the background image with cover fill type
       ctx.drawImage(backgroundImage, offsetX, offsetY, drawWidth, drawHeight);
+
+      // Reset filter before drawing inner content
+      ctx.filter = "none";
 
       // Calculate centered position for the image with padding
       const x = (ctx.canvas.width - (image.width + innerPadding * 2)) / 2;
@@ -433,6 +158,9 @@ function Sidebar({
       ctx.shadowColor = shadowColor;
       ctx.shadowBlur = shadowBlur;
       ctx.shadowOffsetY = shadowOffsetY;
+
+      // Apply other filters to both padding and image
+      ctx.filter = `brightness(${brightness}%) contrast(${contrast}%) opacity(${opacity}%)`;
 
       // Draw background fill with padding using effective padding color
       ctx.beginPath();
@@ -468,6 +196,9 @@ function Sidebar({
         y + innerPadding // center the image with innerPadding
       );
 
+      // Reset the filter after drawing both padding and image
+      ctx.filter = "none";
+
       setAiDescription(null);
       setIsAiDescriptionOpen(false);
     });
@@ -483,6 +214,10 @@ function Sidebar({
     shadowOffsetY,
     selectedAspectRatio,
     paddingColor,
+    brightness,
+    contrast,
+    opacity,
+    blur,
   ]);
 
   return (
@@ -494,176 +229,74 @@ function Sidebar({
       )}
     >
       <div className="flex flex-col gap-4 p-4">
-        <SectionHeader title="Select An Image" />
-        <FileSelector setScreenshotUrl={setScreenshotUrl} />
-        <SectionHeader title="Sizing" />
+        <SidebarImageSelector setScreenshotUrl={setScreenshotUrl} />
+        <SidebarSizingContainer
+          canvasPadding={canvasPadding}
+          setCanvasPadding={setCanvasPadding}
+          innerPadding={innerPadding}
+          setInnerPadding={setInnerPadding}
+          paddingColor={paddingColor}
+          setPaddingColor={setPaddingColor}
+          borderRadius={borderRadius}
+          setBorderRadius={setBorderRadius}
+          selectedAspectRatio={selectedAspectRatio}
+          setSelectedAspectRatio={setSelectedAspectRatio}
+        />
+        <SectionHeader title="Image Adjustment" />
         <div className="flex flex-col gap-2 bg-neutral-800 p-4 rounded-md shadow-md">
-          <label htmlFor="canvasPadding" className="text-sm text-neutral-300">
-            background size
+          <label htmlFor="brightness" className="text-sm text-neutral-300">
+            brightness
           </label>
-
-          <RangeSlider
+          <CustomRangeSlider
             min={0}
-            max={248}
-            defaultValue={canvasPadding}
+            max={200}
             step={1}
-            onChange={(value) => setCanvasPadding(value)}
+            defaultValue={100}
+            onChange={setBrightness}
           />
-          <label htmlFor="padding" className="text-sm text-neutral-300">
-            padding
+          <label htmlFor="contrast" className="text-sm text-neutral-300">
+            contrast
           </label>
-
-          <RangeSlider
+          <CustomRangeSlider
             min={0}
-            max={248}
-            defaultValue={innerPadding}
+            max={200}
             step={1}
-            onChange={(value) => setInnerPadding(value)}
+            defaultValue={100}
+            onChange={setContrast}
           />
-          <label htmlFor="paddingColor" className="text-sm text-neutral-300">
-            padding color
+          <label htmlFor="opacity" className="text-sm text-neutral-300">
+            opacity
           </label>
-          <div className="flex flex-col gap-2 mb-4 shrink-0">
-            <h3
-              className={clsx(
-                "text-sm font-bold text-neutral-300 px-4 py-2 rounded-md cursor-pointer",
-                paddingColor === null ? "bg-blue-600 " : "bg-neutral-800"
-              )}
-              onClick={() => setPaddingColor(null)}
-            >
-              none
-            </h3>
-          </div>
-          <ColorSelector setColor={setPaddingColor} value={paddingColor} />
-          <label htmlFor="borderRadius" className="text-sm text-neutral-300">
-            border radius
-          </label>
-          <RangeSlider
+          <CustomRangeSlider
             min={0}
-            max={64}
-            defaultValue={borderRadius}
+            max={100}
             step={1}
-            onChange={(value) => setBorderRadius(value)}
+            defaultValue={100}
+            onChange={setOpacity}
           />
-          <label
-            htmlFor="borderRadius"
-            className="text-sm text-neutral-300 mb-2"
-          >
-            aspect ratio
+          <label htmlFor="blur" className="text-sm text-neutral-300">
+            background blur
           </label>
-          <div className="flex gap-2  shrink-0 overflow-x-scroll scrollbar-hidden">
-            {aspectRatios.map(({ name, width, height }) => (
-              <div key={name} className="flex flex-col gap-2 mb-4 shrink-0">
-                <h3
-                  className={clsx(
-                    "text-sm font-bold text-neutral-300 px-4 py-2 rounded-md cursor-pointer",
-                    selectedAspectRatio?.name === name
-                      ? "bg-blue-600 "
-                      : "bg-neutral-800"
-                  )}
-                  onClick={() =>
-                    setSelectedAspectRatio({ name, height, width })
-                  }
-                >
-                  {name}
-                </h3>
-              </div>
-            ))}
-          </div>
-        </div>
-        <SectionHeader title="Shadow" />
-        <div className="flex flex-col gap-2 bg-neutral-800 p-4 rounded-md shadow-md">
-          <label htmlFor="shadowColor" className="text-sm text-neutral-300">
-            color
-          </label>
-
-          <ColorSelector setColor={setShadowColor} value={shadowColor} />
-          <label htmlFor="shadowBlur" className="text-sm     text-neutral-300">
-            blur
-          </label>
-
-          <RangeSlider
+          <CustomRangeSlider
             min={0}
-            max={64}
-            defaultValue={shadowBlur}
+            max={200}
             step={1}
-            onChange={(value) => setShadowBlur(value)}
-          />
-          <label htmlFor="shadowOffsetY" className="text-sm text-neutral-300">
-            offset
-          </label>
-          <RangeSlider
-            min={0}
-            max={64}
-            defaultValue={shadowOffsetY}
-            step={1}
-            onChange={(value) => setShadowOffsetY(value)}
+            defaultValue={0}
+            onChange={setBlur}
           />
         </div>
-        <SectionHeader title="Background image" />
-        <div className="flex flex-col gap-2 bg-neutral-800 p-4 rounded-md shadow-md  ">
-          <div className="">
-            <div className="flex gap-2 overflow-x-scroll scrollbar-hidden mb-4">
-              {backgroundImages.map(({ name }) => (
-                <div key={name} className="flex flex-col gap-2 mb-4 shrink-0">
-                  <h3
-                    className={clsx(
-                      "text-sm font-bold text-neutral-300 px-4 py-2 rounded-md cursor-pointer",
-                      selectedBackgroundCategory === name
-                        ? "bg-blue-600 "
-                        : "bg-neutral-800"
-                    )}
-                    onClick={() => setSelectedBackgroundCategory(name)}
-                  >
-                    {name}
-                  </h3>
-                </div>
-              ))}
-              <div className="flex flex-col gap-2 mb-4 shrink-0">
-                <h3
-                  className={clsx(
-                    "text-sm font-bold text-neutral-300 px-4 py-2 rounded-md cursor-pointer",
-                    selectedBackgroundCategory === "custom"
-                      ? "bg-blue-600 "
-                      : "bg-neutral-800"
-                  )}
-                  onClick={() => setSelectedBackgroundCategory("custom")}
-                >
-                  custom
-                </h3>
-              </div>
-            </div>
-            <div className="flex gap-2 flex-wrap">
-              {backgroundImages
-                .find(({ name }) => name === selectedBackgroundCategory)
-                ?.thumbnails?.map((thumbnailUrl, index) => {
-                  const fullImageUrl = backgroundImages.find(
-                    ({ name }) => name === selectedBackgroundCategory
-                  )?.backgrounds[index];
-                  return (
-                    <BackgroundImageCell
-                      key={thumbnailUrl}
-                      url={fullImageUrl}
-                      thumbnailUrl={thumbnailUrl}
-                      onClick={() => setBackgroundImageUrl(fullImageUrl)}
-                    />
-                  );
-                }) ??
-                backgroundImages
-                  .find(({ name }) => name === selectedBackgroundCategory)
-                  ?.backgrounds.map((url) => (
-                    <BackgroundImageCell
-                      key={url}
-                      url={url}
-                      onClick={() => setBackgroundImageUrl(url)}
-                    />
-                  ))}
-              {selectedBackgroundCategory === "custom" && (
-                <CustomImageFileSelector setImageUrl={setBackgroundImageUrl} />
-              )}
-            </div>
-          </div>
-        </div>
+        <SidebarShadowSelector
+          shadowColor={shadowColor}
+          setShadowColor={setShadowColor}
+          shadowBlur={shadowBlur}
+          setShadowBlur={setShadowBlur}
+          shadowOffsetY={shadowOffsetY}
+          setShadowOffsetY={setShadowOffsetY}
+        />
+        <SidebarBackgroundImageSelector
+          backgroundImageUrl={backgroundImageUrl}
+          setBackgroundImageUrl={setBackgroundImageUrl}
+        />
       </div>
     </div>
   );
