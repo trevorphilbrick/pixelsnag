@@ -59,6 +59,7 @@ import {
 import CustomImageFileSelector from "./CustomImageFileSelector";
 import SectionHeader from "./SectionHeader";
 import { useState } from "react";
+import { useScreenshotStore } from "../zustand/useScreenshotStore";
 
 const backgroundImages = [
   {
@@ -170,15 +171,8 @@ const BackgroundImageCell = ({
   );
 };
 
-interface SidebarBackgroundImageSelectorProps {
-  backgroundImageUrl: string;
-  setBackgroundImageUrl: (url: string) => void;
-}
-
-function SidebarBackgroundImageSelector({
-  backgroundImageUrl,
-  setBackgroundImageUrl,
-}: SidebarBackgroundImageSelectorProps) {
+function SidebarBackgroundImageSelector() {
+  const { setBackgroundImageUrl } = useScreenshotStore();
   const [selectedBackgroundCategory, setSelectedBackgroundCategory] =
     useState<string>(backgroundImages[0].name);
 

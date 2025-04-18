@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 function RoundButton({
   icon,
   onClick,
@@ -15,7 +13,6 @@ function RoundButton({
   className?: string;
   lighter?: boolean;
 }) {
-  const [isHovered, setIsHovered] = useState(false);
   return (
     <button
       className={`p-2 px-3 ${
@@ -23,8 +20,6 @@ function RoundButton({
       } rounded-full flex items-center justify-center gap-2 shadow-md hover:bg-neutral-700 transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
       onClick={onClick}
       disabled={disabled}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       {icon && icon}
       {text && (

@@ -2,24 +2,13 @@ import ColorSelector from "./ColorSelector";
 import RangeSlider from "./RangeSlider";
 import SectionHeader from "./SectionHeader";
 import clsx from "clsx";
+import { useCanvasStyleStore } from "../zustand/useCanvasStyleStore";
+import { Dispatch, SetStateAction } from "react";
 
 interface AspectRatio {
   name: string;
   width: number;
   height: number;
-}
-
-interface SidebarSizingContainerProps {
-  canvasPadding: number;
-  setCanvasPadding: (value: number) => void;
-  innerPadding: number;
-  setInnerPadding: (value: number) => void;
-  paddingColor: string | null;
-  setPaddingColor: (value: string | null) => void;
-  borderRadius: number;
-  setBorderRadius: (value: number) => void;
-  selectedAspectRatio: AspectRatio | null;
-  setSelectedAspectRatio: (value: AspectRatio) => void;
 }
 
 const aspectRatios = [
@@ -140,18 +129,26 @@ const aspectRatios = [
   },
 ];
 
+interface SidebarSizingContainerProps {
+  setSelectedAspectRatio: Dispatch<SetStateAction<AspectRatio | null>>;
+  selectedAspectRatio: AspectRatio | null;
+}
+
 function SidebarSizingContainer({
-  canvasPadding,
-  setCanvasPadding,
-  innerPadding,
-  setInnerPadding,
-  paddingColor,
-  setPaddingColor,
-  borderRadius,
-  setBorderRadius,
-  selectedAspectRatio,
   setSelectedAspectRatio,
+  selectedAspectRatio,
 }: SidebarSizingContainerProps) {
+  const {
+    canvasPadding,
+    innerPadding,
+    paddingColor,
+    borderRadius,
+    setCanvasPadding,
+    setInnerPadding,
+    setPaddingColor,
+    setBorderRadius,
+  } = useCanvasStyleStore();
+
   return (
     <>
       <SectionHeader title="Sizing" />

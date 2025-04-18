@@ -1,4 +1,4 @@
-import { version } from "../../package.json"; // Adjust the path as necessary
+import { version } from "../../package.json";
 
 function About() {
   return (

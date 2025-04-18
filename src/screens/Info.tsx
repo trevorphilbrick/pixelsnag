@@ -1,6 +1,7 @@
 import RoundButton from "../components/RoundButton";
 import { useNavigate } from "react-router-dom";
 import { usePlatform } from "../hooks/usePlatform";
+
 function Info() {
   const navigate = useNavigate();
   const platform = usePlatform();

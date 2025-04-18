@@ -8,6 +8,8 @@ import { useAuth } from "../hooks/useAuth";
 import OpenAI from "openai";
 import { analytics } from "../firebasecConfig";
 import { logEvent } from "firebase/analytics";
+import { useCanvasContextStore } from "../zustand/useCanvasContextStore";
+import { useScreenshotStore } from "../zustand/useScreenshotStore";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -15,10 +17,8 @@ const openai = new OpenAI({
 });
 
 function Canvas({
-  setCtx,
   isSidebarOpen,
   setIsSidebarOpen,
-  setScreenshotUrl,
   isGeneratingDescription,
   setIsGeneratingDescription,
   aiDescription,
@@ -26,10 +26,8 @@ function Canvas({
   isAiDescriptionOpen,
   setIsAiDescriptionOpen,
 }: {
-  setCtx: (ctx: CanvasRenderingContext2D) => void;
   isSidebarOpen: boolean;
   setIsSidebarOpen: (isSidebarOpen: boolean) => void;
-  setScreenshotUrl: (url: string) => void;
   isGeneratingDescription: boolean;
   setIsGeneratingDescription: (isGeneratingDescription: boolean) => void;
   aiDescription: string | null;
@@ -42,6 +40,8 @@ function Canvas({
   const [selectedSource, setSelectedSource] = useState<string | null>(null);
   const [sources, setSources] = useState<any[]>([]);
   const [isCapturing, setIsCapturing] = useState(false);
+  const { setCtx } = useCanvasContextStore();
+  const { setScreenshotUrl } = useScreenshotStore();
 
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -153,7 +153,6 @@ function Canvas({
     if (!canvas) return;
 
     try {
-      // Convert canvas to base64 image
       const imageBase64 = canvas.toDataURL("image/png").split(",")[1];
 
       const response = await openai.chat.completions.create({
