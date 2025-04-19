@@ -10,11 +10,7 @@ import { analytics } from "../firebasecConfig";
 import { logEvent } from "firebase/analytics";
 import { useCanvasContextStore } from "../zustand/useCanvasContextStore";
 import { useScreenshotStore } from "../zustand/useScreenshotStore";
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true,
-});
+import { useSettingsState } from "../zustand/useSettingsState";
 
 function Canvas({
   isSidebarOpen,
@@ -42,6 +38,12 @@ function Canvas({
   const [isCapturing, setIsCapturing] = useState(false);
   const { setCtx } = useCanvasContextStore();
   const { setScreenshotUrl } = useScreenshotStore();
+  const { openAIKey } = useSettingsState();
+
+  const openai = new OpenAI({
+    apiKey: openAIKey,
+    dangerouslyAllowBrowser: true,
+  });
 
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -210,7 +212,7 @@ function Canvas({
           isSidebarOpen ? "w-full" : "w-screen"
         )}
       >
-        {aiDescription && (
+        {openAIKey && aiDescription && (
           <div
             className={clsx(
               "absolute  top-0  min-w-96 z-50 h-full w-96 transition-all duration-300 border-r border-neutral-700",
@@ -435,27 +437,29 @@ function Canvas({
             />
           </>
         )}
-        <RoundButton
-          onClick={handleGenerateDescription}
-          text="Generate AI Description"
-          disabled={isGeneratingDescription || !!aiDescription}
-          icon={
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-6 text-neutral-200"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-              />
-            </svg>
-          }
-        />
+        {openAIKey && (
+          <RoundButton
+            onClick={handleGenerateDescription}
+            text="Generate AI Description"
+            disabled={isGeneratingDescription || !!aiDescription}
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6 text-neutral-200"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+                />
+              </svg>
+            }
+          />
+        )}
         {user && (
           <RoundButton
             icon={

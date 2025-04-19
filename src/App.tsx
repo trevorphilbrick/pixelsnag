@@ -14,6 +14,7 @@ import Settings from "./screens/Settings";
 import Feedback from "./components/Feedback";
 import About from "./components/About";
 import { PulseLoader } from "react-spinners";
+import AISettings from "./components/AISettings";
 
 function AuthenticatedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -77,6 +78,7 @@ function AppRoutes() {
         <Route index element={<Navigate to="/account/about" replace />} />
         <Route path="/account/about" element={<About />} />
         <Route path="/account/feedback" element={<Feedback />} />
+        <Route path="/account/ai-settings" element={<AISettings />} />
       </Route>
     </Routes>
   );
